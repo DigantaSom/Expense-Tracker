@@ -1,9 +1,14 @@
-import { HeaderContainer } from './header.styles';
+import { HeaderContainer, Logo, OptionsContainer, OptionLink } from './header.styles';
 
 const Header = () => {
   return (
     <HeaderContainer>
-      <h1>Header</h1>
+      <Logo to='/'>💰 Expense Tracker</Logo>
+
+      <OptionsContainer>
+        <OptionLink to='/create-report'>Create</OptionLink>
+        <OptionLink to='/sign-in'>Sign In</OptionLink>
+      </OptionsContainer>
     </HeaderContainer>
   );
 };
