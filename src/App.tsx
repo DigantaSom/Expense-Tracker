@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import GlobalStyle from './global.styles';
 import Header from './components/header/header.component';
 
 import Home from './pages/home/home.component';
@@ -8,6 +9,7 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.com
 const App = () => {
   return (
     <Router>
+      <GlobalStyle />
       <Header />
       <Switch>
         <Route exact path='/' component={Home} />
