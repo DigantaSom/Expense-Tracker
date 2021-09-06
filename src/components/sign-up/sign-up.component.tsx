@@ -1,5 +1,8 @@
 import { FC, useState, ChangeEvent, FormEvent } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { signUp } from '../../redux/user/user.actions';
+
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
@@ -12,6 +15,8 @@ const SignIn: FC = () => {
     password: '',
     confirmPassword: '',
   });
+
+  const dispatch = useDispatch();
 
   const { displayName, email, password, confirmPassword } = formData;
 
@@ -29,8 +34,7 @@ const SignIn: FC = () => {
       alert('Passwords do not match');
       return;
     }
-
-    // TODO: submit
+    dispatch(signUp(email, password, displayName));
   };
 
   return (

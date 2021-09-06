@@ -1,9 +1,12 @@
-export const GOOGLE_SIGN_IN_START = 'GOOGLE_SIGN_IN_START';
+export const CHECK_USER_SESSION = 'CHECK_USER_SESSION';
 
+export const SIGN_IN_START = 'SIGN_IN_START';
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
 export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE';
 
-export const CHECK_USER_SESSION = 'CHECK_USER_SESSION';
+export const SIGN_UP_START = 'SIGN_UP_START';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
 export const SIGN_OUT_START = 'SIGN_OUT_START';
 export const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS';
@@ -28,10 +31,10 @@ export type CheckUserSessionDispatchType =
   | ISignInFailure;
 
 // Sign In
-interface IGoogleSignInStart {
-  type: typeof GOOGLE_SIGN_IN_START;
+interface ISignInStart {
+  type: typeof SIGN_IN_START;
 }
-interface ISignInSuccess {
+export interface ISignInSuccess {
   type: typeof SIGN_IN_SUCCESS;
   payload: IUser;
 }
@@ -39,10 +42,20 @@ interface ISignInFailure {
   type: typeof SIGN_IN_FAILURE;
   payload: string;
 }
-export type GoogleSignInDispatchType =
-  | IGoogleSignInStart
-  | ISignInSuccess
-  | ISignInFailure;
+export type SignInDispatchType = ISignInStart | ISignInSuccess | ISignInFailure;
+
+// Sign Up
+interface ISignUpStart {
+  type: typeof SIGN_UP_START;
+}
+interface ISignUpSuccess {
+  type: typeof SIGN_UP_SUCCESS;
+}
+interface ISignUpFailure {
+  type: typeof SIGN_UP_FAILURE;
+  payload: string;
+}
+export type SignUpDispatchType = ISignUpStart | ISignUpSuccess | ISignUpFailure;
 
 // Sign Out
 interface ISignOutStart {
@@ -60,5 +73,5 @@ export type SignOutDispatchType = ISignOutStart | ISignOutSuccess | ISignOutFail
 // User Action type
 export type UserActionType =
   | CheckUserSessionDispatchType
-  | GoogleSignInDispatchType
+  | SignInDispatchType
   | SignOutDispatchType;

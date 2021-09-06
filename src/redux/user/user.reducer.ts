@@ -2,7 +2,7 @@ import {
   UserActionType,
   IUser,
   CHECK_USER_SESSION,
-  GOOGLE_SIGN_IN_START,
+  SIGN_IN_START,
   SIGN_IN_SUCCESS,
   SIGN_IN_FAILURE,
   SIGN_OUT_START,
@@ -36,7 +36,7 @@ const userReducer = (
       };
 
     // Sign In
-    case GOOGLE_SIGN_IN_START:
+    case SIGN_IN_START:
       return {
         ...state,
         loading: true,

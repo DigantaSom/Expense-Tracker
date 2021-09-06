@@ -5,7 +5,7 @@ import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import { SignInContainer, Title, ButtonsContainer } from './sign-in.styles';
-import { googleSignIn } from '../../redux/user/user.actions';
+import { emailSignIn, googleSignIn } from '../../redux/user/user.actions';
 
 const SignIn: FC = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +26,7 @@ const SignIn: FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: submit
+    dispatch(emailSignIn(email, password));
   };
 
   return (

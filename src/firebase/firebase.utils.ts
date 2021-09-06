@@ -33,11 +33,10 @@ export const getCurrentUser = () =>
     );
   });
 
-export const createUserProfileDocument = async (userAuth: User) => {
+export const createUserProfileDocument = async (userAuth: User, additionalData?: any) => {
   if (!userAuth) {
     return;
   }
-
   // const userRef = doc(firestore, 'users', userAuth.uid);
   const usersCollectionRef = collection(firestore, 'users');
   const userRef = doc(usersCollectionRef, userAuth.uid);
@@ -54,6 +53,7 @@ export const createUserProfileDocument = async (userAuth: User) => {
         email,
         photoURL,
         createdAt,
+        ...additionalData,
       });
     } catch (err) {
       console.error('Error creating user:', err);
