@@ -38,7 +38,7 @@ export interface ISignInSuccess {
   type: typeof SIGN_IN_SUCCESS;
   payload: IUser;
 }
-interface ISignInFailure {
+export interface ISignInFailure {
   type: typeof SIGN_IN_FAILURE;
   payload: string;
 }

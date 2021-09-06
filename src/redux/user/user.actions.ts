@@ -23,6 +23,8 @@ import {
   SIGN_IN_START,
   SIGN_IN_SUCCESS,
   SIGN_IN_FAILURE,
+  ISignInSuccess,
+  ISignInFailure,
   SignUpDispatchType,
   SignOutDispatchType,
   SIGN_OUT_START,
@@ -31,8 +33,29 @@ import {
   SIGN_UP_START,
   SIGN_UP_FAILURE,
   SIGN_UP_SUCCESS,
-  ISignInSuccess,
 } from './user.types';
+
+const getSnapshotFromUserAuth =
+  (userAuth: User, additionalData?: any) =>
+  async (dispatch: Dispatch<ISignInSuccess | ISignInFailure>) => {
+    try {
+      const userRef = await createUserProfileDocument(userAuth, additionalData);
+      if (!userRef) {
+        return;
+      }
+      const userSnapshot = await getDoc(userRef);
+      dispatch({
+        type: SIGN_IN_SUCCESS,
+        payload: userSnapshot.data() as IUser,
+      });
+    } catch (err: any) {
+      dispatch({
+        type: SIGN_IN_FAILURE,
+        payload: err.message,
+      });
+      alert(err.message);
+    }
+  };
 
 export const checkUserSession =
   () => async (dispatch: Dispatch<CheckUserSessionDispatchType>) => {
@@ -45,15 +68,7 @@ export const checkUserSession =
       if (!userAuth) {
         return;
       }
-      const userRef = await createUserProfileDocument(userAuth as User);
-      if (!userRef) {
-        return;
-      }
-      const userSnapshot = await getDoc(userRef);
-      dispatch({
-        type: SIGN_IN_SUCCESS,
-        payload: userSnapshot.data() as IUser,
-      });
+      dispatch(getSnapshotFromUserAuth(userAuth as User) as any);
     } catch (err: any) {
       dispatch({
         type: SIGN_IN_FAILURE,
@@ -69,20 +84,13 @@ export const googleSignIn = () => async (dispatch: Dispatch<SignInDispatchType>)
 
   try {
     const { user } = await signInWithPopup(auth, googleProvider);
-    const userRef = await createUserProfileDocument(user);
-    if (!userRef) {
-      return;
-    }
-    const userSnapshot = await getDoc(userRef);
-    dispatch({
-      type: SIGN_IN_SUCCESS,
-      payload: userSnapshot.data() as IUser,
-    });
+    dispatch(getSnapshotFromUserAuth(user) as any);
   } catch (err: any) {
     dispatch({
       type: SIGN_IN_FAILURE,
       payload: err.message,
     });
+    alert(err.message);
   }
 };
 
@@ -94,20 +102,13 @@ export const emailSignIn =
 
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
-      const userRef = await createUserProfileDocument(user);
-      if (!userRef) {
-        return;
-      }
-      const userSnapshot = await getDoc(userRef);
-      dispatch({
-        type: SIGN_IN_SUCCESS,
-        payload: userSnapshot.data() as IUser,
-      });
+      dispatch(getSnapshotFromUserAuth(user) as any);
     } catch (err: any) {
       dispatch({
         type: SIGN_IN_FAILURE,
         payload: err.message,
       });
+      alert(err.message);
     }
   };
 
@@ -123,25 +124,14 @@ export const signUp =
       dispatch({
         type: SIGN_UP_SUCCESS,
       });
-
       // Sign in after sign up
-      const userRef = await createUserProfileDocument(user, {
-        displayName,
-        photoURL: '',
-      });
-      if (!userRef) {
-        return;
-      }
-      const userSnapshot = await getDoc(userRef);
-      dispatch({
-        type: SIGN_IN_SUCCESS,
-        payload: userSnapshot.data() as IUser,
-      });
+      dispatch(getSnapshotFromUserAuth(user, { displayName, photoURL: '' }) as any);
     } catch (err: any) {
       dispatch({
         type: SIGN_UP_FAILURE,
         payload: err.message,
       });
+      alert(err.message);
     }
   };
 
@@ -160,5 +150,6 @@ export const signOutAction = () => async (dispatch: Dispatch<SignOutDispatchType
       type: SIGN_OUT_FAILURE,
       payload: err.message,
     });
+    alert(err.message);
   }
 };
