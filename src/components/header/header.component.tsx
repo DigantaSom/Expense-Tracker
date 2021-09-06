@@ -1,6 +1,8 @@
+import { FC } from 'react';
+
 import { HeaderContainer, Logo, OptionsContainer, OptionLink } from './header.styles';
 
-const Header = () => {
+const Header: FC = () => {
   return (
     <HeaderContainer>
       <Logo to='/'>💰 Expense Tracker</Logo>

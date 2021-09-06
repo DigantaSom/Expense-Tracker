@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import Colors from '../../constants/Colors';
+
 interface LandingImageContainerProps {
   imageUrl: string;
 }
@@ -27,7 +29,7 @@ export const LandingInfo = styled.div`
 `;
 
 export const ButtonContainer = styled(Link)`
-  background-color: #168118;
+  background-color: ${Colors.primary};
   color: white;
   font-size: 1.5rem;
   font-weight: 500;
