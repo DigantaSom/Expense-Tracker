@@ -26,4 +26,5 @@ export const OptionLink = styled(Link)`
   padding: 0 0.8rem;
   font-size: 1.2rem;
   font-weight: 600;
+  cursor: pointer;
 `;

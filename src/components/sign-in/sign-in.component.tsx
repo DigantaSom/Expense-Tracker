@@ -1,15 +1,19 @@
 import { FC, useState, ChangeEvent, FormEvent } from 'react';
+import { useDispatch } from 'react-redux';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import { SignInContainer, Title, ButtonsContainer } from './sign-in.styles';
+import { googleSignIn } from '../../redux/user/user.actions';
 
 const SignIn: FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const dispatch = useDispatch();
 
   const { email, password } = formData;
 
@@ -50,7 +54,10 @@ const SignIn: FC = () => {
 
         <ButtonsContainer>
           <CustomButton type='submit'>Sign in</CustomButton>
-          <CustomButton type='button' onClick={() => {}} isGoogleSignIn>
+          <CustomButton
+            type='button'
+            onClick={() => dispatch(googleSignIn())}
+            isGoogleSignIn>
             Sign in with Google
           </CustomButton>
         </ButtonsContainer>
