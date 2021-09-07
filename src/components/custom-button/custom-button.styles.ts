@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
 import Colors from '../../constants/Colors';
 import { CustomButtonProps } from './custom-button.component';
@@ -14,8 +14,7 @@ const buttonStyles = css`
     color: ${Colors.primary};
   }
 `;
-
-const googleSignInStyles = css`
+const googleButtonStyles = css`
   background-color: ${Colors.google};
   color: white;
   border: none;
@@ -24,12 +23,23 @@ const googleSignInStyles = css`
     background-color: ${Colors.googleDark};
   }
 `;
+const invertedButtonStyles = css`
+  background-color: white;
+  color: ${Colors.primary};
+  border: 1px solid ${Colors.primary};
 
-const getButtonStyles = (props: CustomButtonProps) => {
-  if (props.isGoogleSignIn) {
-    return googleSignInStyles;
+  :hover {
+    background-color: ${Colors.primary};
+    color: white;
+    border: none;
   }
-  return buttonStyles;
+`;
+
+const getButtonStyles = (props: CustomButtonProps): FlattenSimpleInterpolation => {
+  if (props.isGoogleSignIn) {
+    return googleButtonStyles;
+  }
+  return props.inverted ? invertedButtonStyles : buttonStyles;
 };
 
 export const Button = styled.button`
