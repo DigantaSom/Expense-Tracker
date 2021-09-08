@@ -13,12 +13,11 @@ export const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS';
 export const SIGN_OUT_FAILURE = 'SIGN_OUT_FAILURE';
 
 export interface IUser {
-  currentUser: {
-    displayName: string;
-    email: string;
-    photoURL: string;
-    createdAt: string;
-  };
+  id: string;
+  displayName: string;
+  email: string;
+  photoURL: string;
+  createdAt: string;
 }
 
 // Check user session

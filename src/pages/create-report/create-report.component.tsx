@@ -1,12 +1,26 @@
 import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import dayjs from 'dayjs';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { addReportItem } from '../../redux/report/report.actions';
+
+import { RedirectToType } from '../../types';
+
+import Spinner from '../../components/spinner/spinner.component';
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
 import { CreateReportContainer, Title, ButtonsContainer } from './create-report.styles';
 
 const CreateReport: FC = () => {
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { loading } = useSelector((state: RootState) => state.report);
+
+  const history = useHistory();
+
   const [formData, setFormData] = useState({
     item: '',
     description: '', // optional
@@ -21,7 +35,7 @@ const CreateReport: FC = () => {
 
   useEffect(() => {
     if (date) {
-      setDateInHeading(dayjs(date).format('MMM[, ]YYYY'));
+      setDateInHeading(dayjs(date).format('MMMM[, ]YYYY'));
     }
   }, [date]);
 
@@ -32,19 +46,57 @@ const CreateReport: FC = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>, redirectTo: RedirectToType) => {
     e.preventDefault();
-    // TODO: submit
-    // dispatch(addReportItem({...formData, date: new Date(date).toISOString()}))
+
+    if (!item || !recipient || !cost || !medium || !date) {
+      alert('Please fill the required fields.');
+      return;
+    }
+
+    if (currentUser) {
+      dispatch(
+        addReportItem(
+          { ...formData, cost: parseFloat(cost), date: new Date(date).toISOString() },
+          currentUser,
+          redirectTo,
+          history,
+        ),
+      );
+    }
+
+    setFormData({
+      ...formData,
+      item: '',
+      description: '',
+      recipient: '',
+      cost: '',
+      medium: '',
+      date: '',
+    });
+    setDateInHeading('');
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <CreateReportContainer>
       <Title>
-        Item 1 of the Expense Report {dateInHeading && `for ${dateInHeading}`}
+        New item for the Expense Report {dateInHeading && `of ${dateInHeading}`}
       </Title>
 
-      <form onSubmit={handleSubmit} autoComplete='off'>
+      <form autoComplete='off'>
+        <FormInput
+          type='date'
+          name='date'
+          value={date}
+          handleChange={handleChange}
+          label={''}
+          required
+          box
+        />
         <FormInput
           type='text'
           name='item'
@@ -90,22 +142,21 @@ const CreateReport: FC = () => {
           required
           box
         />
-        {/* <DatePicker selected={date} onChange={date => setDate(date as Date)} /> */}
-        <FormInput
-          type='date'
-          name='date'
-          value={date}
-          handleChange={handleChange}
-          label={''}
-          required
-          box
-        />
 
         <ButtonsContainer>
-          <CustomButton type='button' onClick={() => {}} inverted>
+          <CustomButton
+            type='button'
+            onClick={(e: FormEvent<HTMLFormElement>) => handleSubmit(e, 'Same')}
+            inverted
+            disabled={loading}>
             Save & Add Another
           </CustomButton>
-          <CustomButton type='submit'>Save & Finish</CustomButton>
+          <CustomButton
+            type='button'
+            onClick={(e: FormEvent<HTMLFormElement>) => handleSubmit(e, 'Home')}
+            disabled={loading}>
+            Save & Finish
+          </CustomButton>
         </ButtonsContainer>
       </form>
     </CreateReportContainer>

@@ -63,4 +63,4 @@ export const createUserProfileDocument = async (userAuth: User, additionalData?:
   return userRef;
 };
 
-export { auth, firestore, doc, collection, getDoc, setDoc };
+export { auth, firestore };

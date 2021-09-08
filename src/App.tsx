@@ -27,12 +27,12 @@ const App: FC = () => {
       <Header />
       <Switch>
         <Route exact path='/' component={HomePage} />
+        <Route path='/create-report' component={CreateReportPage} />
         {currentUser ? (
           <Redirect to='/' />
         ) : (
           <Route path='/sign-in' component={SignInAndSignUpPage} />
         )}
-        <Route path='/create-report' component={CreateReportPage} />
       </Switch>
     </Router>
   );

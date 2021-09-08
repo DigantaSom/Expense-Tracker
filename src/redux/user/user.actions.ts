@@ -7,9 +7,9 @@ import {
   createUserWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
+import { getDoc } from 'firebase/firestore';
 import {
   auth,
-  getDoc,
   getCurrentUser,
   googleProvider,
   createUserProfileDocument,
@@ -46,7 +46,10 @@ const getSnapshotFromUserAuth =
       const userSnapshot = await getDoc(userRef);
       dispatch({
         type: SIGN_IN_SUCCESS,
-        payload: userSnapshot.data() as IUser,
+        payload: {
+          id: userSnapshot.id,
+          ...userSnapshot.data(),
+        } as IUser,
       });
     } catch (err: any) {
       dispatch({
