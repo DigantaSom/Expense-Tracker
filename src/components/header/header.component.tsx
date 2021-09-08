@@ -10,20 +10,22 @@ const Header: FC = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: RootState) => state.user);
 
+  const guestLinks = <OptionLink to='/sign-in'>Sign In</OptionLink>;
+
+  const authLinks = (
+    <>
+      <OptionLink to='/create-report'>Create</OptionLink>
+      <OptionLink to='/profile'>My Profile</OptionLink>
+      <OptionLink as='div' onClick={() => dispatch(signOutAction())}>
+        Sign Out
+      </OptionLink>
+    </>
+  );
+
   return (
     <HeaderContainer>
       <Logo to='/'>💰 Expense Tracker</Logo>
-
-      <OptionsContainer>
-        <OptionLink to='/create-report'>Create</OptionLink>
-        {currentUser ? (
-          <OptionLink as='div' onClick={() => dispatch(signOutAction())}>
-            Sign Out
-          </OptionLink>
-        ) : (
-          <OptionLink to='/sign-in'>Sign In</OptionLink>
-        )}
-      </OptionsContainer>
+      <OptionsContainer>{currentUser ? authLinks : guestLinks}</OptionsContainer>
     </HeaderContainer>
   );
 };

@@ -13,6 +13,7 @@ import PrivateRoute from './components/private-route/private-route.component';
 import HomePage from './pages/home/home.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import CreateReportPage from './pages/create-report/create-report.component';
+import ProfilePage from './pages/profile/profile.component';
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -33,12 +34,17 @@ const App: FC = () => {
           component={CreateReportPage}
           isAuthenticated={!!currentUser}
         />
-        {currentUser ? (
-          <Redirect to='/' />
-        ) : (
-          <Route path='/sign-in' component={SignInAndSignUpPage} />
-        )}
+        <PrivateRoute
+          path='/profile'
+          component={ProfilePage}
+          isAuthenticated={!!currentUser}
+        />
       </Switch>
+      {currentUser ? (
+        <Redirect to='/' />
+      ) : (
+        <Route path='/sign-in' component={SignInAndSignUpPage} />
+      )}
     </Router>
   );
 };

@@ -6,7 +6,7 @@ import { writeBatch, increment, doc, collection, getDoc } from 'firebase/firesto
 import { firestore } from '../../firebase/firebase.utils';
 
 import {
-  IReport,
+  IReportItem,
   AddReportItemDispatchType,
   ADD_REPORT_ITEM_START,
   ADD_REPORT_ITEM_SUCCESS,
@@ -17,7 +17,7 @@ import { RedirectToType } from '../../types';
 
 export const addReportItem =
   (
-    newReport: IReport,
+    newReportItem: IReportItem,
     currentUser: IUser,
     redirectTo: RedirectToType,
     history: History<unknown>,
@@ -27,8 +27,8 @@ export const addReportItem =
       type: ADD_REPORT_ITEM_START,
     });
 
-    const year = dayjs(newReport.date).format('YYYY');
-    const month = dayjs(newReport.date).format('MMMM');
+    const year = dayjs(newReportItem.date).format('YYYY');
+    const month = dayjs(newReportItem.date).format('MMMM');
 
     const reportsYearDocRef = doc(
       firestore,
@@ -50,10 +50,10 @@ export const addReportItem =
     try {
       const batch = writeBatch(firestore);
 
-      // await addDoc(reportsMonthCollectionRef, newReport);
-      batch.set(reportsMonthDocRef, newReport);
+      // await addDoc(reportsMonthCollectionRef, newReportItem);
+      batch.set(reportsMonthDocRef, newReportItem);
 
-      const monthReportCountPropertyName = `${month.toLowerCase()}${year}ReportCount`;
+      const monthReportCountPropertyName = `${month.toLowerCase()}${year}ReportItemCount`;
 
       const reportYearDocSnapshot = await getDoc(reportsYearDocRef);
 
@@ -72,7 +72,7 @@ export const addReportItem =
       dispatch({
         type: ADD_REPORT_ITEM_SUCCESS,
       });
-      alert('Added New Expense Report!');
+      alert('Added new Expense Report Item!');
 
       if (redirectTo === 'Home') {
         history.push('/');
@@ -82,6 +82,6 @@ export const addReportItem =
         type: ADD_REPORT_ITEM_FAILURE,
         payload: err.message,
       });
-      alert('Failed to add a new expense report.');
+      alert('Failed to add a new expense report item.');
     }
   };

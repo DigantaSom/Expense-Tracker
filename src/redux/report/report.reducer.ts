@@ -1,5 +1,5 @@
 import {
-  IReport,
+  IReportItem,
   ReportActionType,
   ADD_REPORT_ITEM_START,
   ADD_REPORT_ITEM_SUCCESS,
@@ -7,13 +7,13 @@ import {
 } from './report.types';
 
 interface IDefaultState {
-  report: IReport | null;
+  report: IReportItem[];
   loading: boolean;
   error: string;
 }
 
 const defaultState: IDefaultState = {
-  report: null,
+  report: [],
   loading: false,
   error: '',
 };
