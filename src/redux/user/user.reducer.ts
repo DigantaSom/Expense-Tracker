@@ -32,7 +32,7 @@ const userReducer = (
       return {
         ...state,
         currentUser: null,
-        loading: true,
+        // loading: true,
       };
 
     // Sign In
