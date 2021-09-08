@@ -8,6 +8,7 @@ import { checkUserSession } from './redux/user/user.actions';
 import GlobalStyle from './global.styles';
 
 import Header from './components/header/header.component';
+import PrivateRoute from './components/private-route/private-route.component';
 
 import HomePage from './pages/home/home.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
@@ -27,7 +28,11 @@ const App: FC = () => {
       <Header />
       <Switch>
         <Route exact path='/' component={HomePage} />
-        <Route path='/create-report' component={CreateReportPage} />
+        <PrivateRoute
+          path='/create-report'
+          component={CreateReportPage}
+          isAuthenticated={!!currentUser}
+        />
         {currentUser ? (
           <Redirect to='/' />
         ) : (

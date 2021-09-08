@@ -72,6 +72,7 @@ export const addReportItem =
       dispatch({
         type: ADD_REPORT_ITEM_SUCCESS,
       });
+      alert('Added New Expense Report!');
 
       if (redirectTo === 'Home') {
         history.push('/');
@@ -81,5 +82,6 @@ export const addReportItem =
         type: ADD_REPORT_ITEM_FAILURE,
         payload: err.message,
       });
+      alert('Failed to add a new expense report.');
     }
   };

@@ -17,7 +17,7 @@ import { CreateReportContainer, Title, ButtonsContainer } from './create-report.
 const CreateReport: FC = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: RootState) => state.user);
-  const { loading } = useSelector((state: RootState) => state.report);
+  const { loading: reportLoading } = useSelector((state: RootState) => state.report);
 
   const history = useHistory();
 
@@ -77,7 +77,7 @@ const CreateReport: FC = () => {
     setDateInHeading('');
   };
 
-  if (loading) {
+  if (reportLoading) {
     return <Spinner />;
   }
 
@@ -148,13 +148,13 @@ const CreateReport: FC = () => {
             type='button'
             onClick={(e: FormEvent<HTMLFormElement>) => handleSubmit(e, 'Same')}
             inverted
-            disabled={loading}>
+            disabled={reportLoading}>
             Save & Add Another
           </CustomButton>
           <CustomButton
             type='button'
             onClick={(e: FormEvent<HTMLFormElement>) => handleSubmit(e, 'Home')}
-            disabled={loading}>
+            disabled={reportLoading}>
             Save & Finish
           </CustomButton>
         </ButtonsContainer>
