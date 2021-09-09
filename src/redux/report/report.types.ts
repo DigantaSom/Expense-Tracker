@@ -7,6 +7,7 @@ export const ADD_REPORT_ITEM_SUCCESS = 'ADD_REPORT_ITEM_SUCCESS';
 export const ADD_REPORT_ITEM_FAILURE = 'ADD_REPORT_ITEM_FAILURE';
 
 export interface IReportItem {
+  id?: string;
   item: string;
   description?: string;
   recipient: string;
@@ -16,6 +17,21 @@ export interface IReportItem {
 }
 
 // Fetch all items of an Expense Report by year and month together
+export interface IFetchExpenseReportStart {
+  type: typeof FETCH_EXPENSE_REPORT_START;
+}
+export interface IFetchExpenseReportSuccess {
+  type: typeof FETCH_EXPENSE_REPORT_SUCCESS;
+  payload: IReportItem[];
+}
+export interface IFetchExpenseReportFailure {
+  type: typeof FETCH_EXPENSE_REPORT_FAILURE;
+  payload: string;
+}
+export type FetchExpenseReportDispatchType =
+  | IFetchExpenseReportStart
+  | IFetchExpenseReportSuccess
+  | IFetchExpenseReportFailure;
 
 // Add a report item
 export interface IAddReportItemStart {
@@ -34,4 +50,4 @@ export type AddReportItemDispatchType =
   | IAddReportItemFailure;
 
 // Report Action Type
-export type ReportActionType = AddReportItemDispatchType;
+export type ReportActionType = FetchExpenseReportDispatchType | AddReportItemDispatchType;

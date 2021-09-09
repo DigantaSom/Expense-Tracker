@@ -4,7 +4,7 @@ import { Group, Input, Label } from './form-input.styles';
 
 interface FormInputProps {
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  label: string;
+  label?: string;
   box?: boolean;
   [otherProps: string]: any; // work around
 }

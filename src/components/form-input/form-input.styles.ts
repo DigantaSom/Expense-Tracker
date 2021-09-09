@@ -1,6 +1,7 @@
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
 import Colors from '../../constants/Colors';
+import UI from '../../constants/UI';
 
 interface InputProps {
   box: boolean;
@@ -24,7 +25,7 @@ const inputStyles = css`
 `;
 const boxInputStyles = css`
   border: 1px solid ${subColor};
-  border-radius: 10px;
+  border-radius: ${UI.default_borderRadius};
   padding: 10px 15px;
 
   :focus {

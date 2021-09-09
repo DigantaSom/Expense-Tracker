@@ -2,11 +2,22 @@ import { Dispatch } from 'redux';
 import { History } from 'history';
 import dayjs from 'dayjs';
 
-import { writeBatch, increment, doc, collection, getDoc } from 'firebase/firestore';
+import {
+  writeBatch,
+  increment,
+  doc,
+  collection,
+  getDoc,
+  getDocs,
+} from 'firebase/firestore';
 import { firestore } from '../../firebase/firebase.utils';
 
 import {
   IReportItem,
+  FetchExpenseReportDispatchType,
+  FETCH_EXPENSE_REPORT_START,
+  FETCH_EXPENSE_REPORT_SUCCESS,
+  FETCH_EXPENSE_REPORT_FAILURE,
   AddReportItemDispatchType,
   ADD_REPORT_ITEM_START,
   ADD_REPORT_ITEM_SUCCESS,
@@ -14,6 +25,57 @@ import {
 } from './report.types';
 import { IUser } from '../user/user.types';
 import { RedirectToType } from '../../types';
+
+// Fetch all items of an Expense Report by year and month together
+export const fetchExpenseReport =
+  (year: string, month: string, currentUser: IUser) =>
+  async (dispatch: Dispatch<FetchExpenseReportDispatchType>) => {
+    dispatch({
+      type: FETCH_EXPENSE_REPORT_START,
+    });
+
+    const expenseReportToDispatch: IReportItem[] = [];
+
+    const reportCollectionRef = collection(
+      firestore,
+      'reports',
+      currentUser.id,
+      year,
+      currentUser.id,
+      month,
+    );
+
+    try {
+      const reportSnapshot = await getDocs(reportCollectionRef);
+
+      if (reportSnapshot.empty) {
+        dispatch({
+          type: FETCH_EXPENSE_REPORT_FAILURE,
+          payload: 'No report found.',
+        });
+        alert('No report found.');
+        return;
+      }
+
+      reportSnapshot.forEach(doc => {
+        expenseReportToDispatch.push({
+          id: doc.id,
+          ...doc.data(),
+        } as IReportItem);
+      });
+
+      dispatch({
+        type: FETCH_EXPENSE_REPORT_SUCCESS,
+        payload: expenseReportToDispatch,
+      });
+    } catch (err: any) {
+      dispatch({
+        type: FETCH_EXPENSE_REPORT_FAILURE,
+        payload: err.message,
+      });
+      alert('Failed to load the Expense Report.');
+    }
+  };
 
 export const addReportItem =
   (

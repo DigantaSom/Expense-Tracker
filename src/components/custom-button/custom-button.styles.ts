@@ -1,7 +1,9 @@
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
-import Colors from '../../constants/Colors';
 import { CustomButtonProps } from './custom-button.component';
+
+import Colors from '../../constants/Colors';
+import UI from '../../constants/UI';
 
 const buttonStyles = css`
   background-color: ${Colors.primary};
@@ -42,13 +44,14 @@ const getButtonStyles = (props: CustomButtonProps): FlattenSimpleInterpolation =
   return props.inverted ? invertedButtonStyles : buttonStyles;
 };
 
-export const Button = styled.button`
+export const Button = styled.button<CustomButtonProps>`
   min-width: 165px;
   width: auto;
   height: 50px;
   letter-spacing: 0.5px;
   line-height: 50px;
   padding: 0 35px;
+  border-radius: ${props => (props.rounded ? UI.default_borderRadius : 0)};
   font-family: 'Open Sans Condensed', sans-serif;
   font-size: 15px;
   font-weight: bolder;
