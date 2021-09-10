@@ -6,6 +6,6 @@ interface PrivateRouteProps extends RouteProps {
 }
 
 const PrivateRoute: FC<PrivateRouteProps> = ({ isAuthenticated, ...rest }) =>
-  !isAuthenticated ? <Redirect to='/' /> : <Route {...rest} />;
+  !isAuthenticated ? <Redirect to='/sign-in' /> : <Route {...rest} />;
 
 export default PrivateRoute;

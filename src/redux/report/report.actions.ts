@@ -22,6 +22,8 @@ import {
   ADD_REPORT_ITEM_START,
   ADD_REPORT_ITEM_SUCCESS,
   ADD_REPORT_ITEM_FAILURE,
+  IClearReport,
+  CLEAR_REPORT,
 } from './report.types';
 import { IUser } from '../user/user.types';
 import { RedirectToType } from '../../types';
@@ -147,3 +149,10 @@ export const addReportItem =
       alert('Failed to add a new expense report item.');
     }
   };
+
+// Clear Report state
+export const clearReport = () => async (dispatch: Dispatch<IClearReport>) => {
+  dispatch({
+    type: CLEAR_REPORT,
+  });
+};

@@ -6,6 +6,8 @@ export const ADD_REPORT_ITEM_START = 'ADD_REPORT_ITEM_START';
 export const ADD_REPORT_ITEM_SUCCESS = 'ADD_REPORT_ITEM_SUCCESS';
 export const ADD_REPORT_ITEM_FAILURE = 'ADD_REPORT_ITEM_FAILURE';
 
+export const CLEAR_REPORT = 'CLEAR_REPORT';
+
 export interface IReportItem {
   id?: string;
   item: string;
@@ -49,5 +51,13 @@ export type AddReportItemDispatchType =
   | IAddReportItemSuccess
   | IAddReportItemFailure;
 
+// Clear Report state
+export interface IClearReport {
+  type: typeof CLEAR_REPORT;
+}
+
 // Report Action Type
-export type ReportActionType = FetchExpenseReportDispatchType | AddReportItemDispatchType;
+export type ReportActionType =
+  | FetchExpenseReportDispatchType
+  | AddReportItemDispatchType
+  | IClearReport;

@@ -7,6 +7,7 @@ import {
   ADD_REPORT_ITEM_START,
   ADD_REPORT_ITEM_SUCCESS,
   ADD_REPORT_ITEM_FAILURE,
+  CLEAR_REPORT,
 } from './report.types';
 
 interface IDefaultState {
@@ -65,6 +66,10 @@ const reportReducer = (
         loading: false,
         error: action.payload,
       };
+
+    // Clear Report state
+    case CLEAR_REPORT:
+      return defaultState;
 
     default:
       return state;

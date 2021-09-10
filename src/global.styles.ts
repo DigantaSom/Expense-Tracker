@@ -7,7 +7,8 @@ const GlobalStyle = createGlobalStyle`
 
 	body {
   margin: 0;
-	font-family: 'Open Sans Condensed', sans-serif;
+	/* font-family: 'Open Sans Condensed', sans-serif; */
+	font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

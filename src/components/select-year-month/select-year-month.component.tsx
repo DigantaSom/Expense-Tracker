@@ -55,6 +55,7 @@ const SelectYearMonth: FC = () => {
           required
         />
         <SelectInput name='month' onChange={handleChange} required>
+          <option value=''>Month</option>
           <option value='January'>January</option>
           <option value='February'>February</option>
           <option value='March'>March</option>
