@@ -10,3 +10,5 @@ export type ItemFieldType =
   | '';
 
 export type ConfirmType = 'Confirmed' | 'Cancelled';
+
+export type SizeType = 'small' | 'large';

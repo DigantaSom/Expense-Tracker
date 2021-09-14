@@ -24,6 +24,7 @@ import {
   EditCellContent,
   DeleteCellContent,
 } from './report-item.styles';
+import Spinner from '../spinner/spinner.component';
 
 interface ReportItemProps {
   index: number;
@@ -139,15 +140,17 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             )}
           </td>
           <EditDeleteCell>
-            {isActionLoading && actionLoading.field === 'Name' ? (
-              <div>Loading...</div>
-            ) : editField === 'Name' ? (
+            {editField === 'Name' ? (
               <EditConfirmButtons handleConfirmEdit={handleConfirmEdit} />
             ) : (
               <EditCellContent
                 onClick={() => setEditField('Name')}
                 isClickDisabled={actionLoading.loading}>
-                Edit
+                {isActionLoading && actionLoading.field === 'Name' ? (
+                  <Spinner size='small' />
+                ) : (
+                  'Edit'
+                )}
               </EditCellContent>
             )}
           </EditDeleteCell>
@@ -155,7 +158,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             <DeleteCellContent
               onClick={handleDeleteItem}
               isClickDisabled={actionLoading.loading}>
-              Delete Item
+              {isActionLoading ? <Spinner size='small' /> : 'Delete Item'}
             </DeleteCellContent>
           </EditDeleteCell>
         </tr>
@@ -177,15 +180,17 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
               )}
             </td>
             <EditDeleteCell>
-              {isActionLoading && actionLoading.field === 'Description' ? (
-                <div>Loading...</div>
-              ) : editField === 'Description' ? (
+              {editField === 'Description' ? (
                 <EditConfirmButtons handleConfirmEdit={handleConfirmEdit} />
               ) : (
                 <EditCellContent
                   onClick={() => setEditField('Description')}
                   isClickDisabled={actionLoading.loading}>
-                  Edit
+                  {isActionLoading && actionLoading.field === 'Description' ? (
+                    <Spinner size='small' />
+                  ) : (
+                    'Edit'
+                  )}
                 </EditCellContent>
               )}
             </EditDeleteCell>
@@ -209,15 +214,17 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             )}
           </td>
           <EditDeleteCell>
-            {isActionLoading && actionLoading.field === 'Cost' ? (
-              <div>Loading...</div>
-            ) : editField === 'Cost' ? (
+            {editField === 'Cost' ? (
               <EditConfirmButtons handleConfirmEdit={handleConfirmEdit} />
             ) : (
               <EditCellContent
                 onClick={() => setEditField('Cost')}
                 isClickDisabled={actionLoading.loading}>
-                Edit
+                {isActionLoading && actionLoading.field === 'Cost' ? (
+                  <Spinner size='small' />
+                ) : (
+                  'Edit'
+                )}
               </EditCellContent>
             )}
           </EditDeleteCell>
@@ -239,15 +246,17 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             )}
           </td>
           <EditDeleteCell>
-            {isActionLoading && actionLoading.field === 'Recipient' ? (
-              <div>Loading...</div>
-            ) : editField === 'Recipient' ? (
+            {editField === 'Recipient' ? (
               <EditConfirmButtons handleConfirmEdit={handleConfirmEdit} />
             ) : (
               <EditCellContent
                 onClick={() => setEditField('Recipient')}
                 isClickDisabled={actionLoading.loading}>
-                Edit
+                {isActionLoading && actionLoading.field === 'Recipient' ? (
+                  <Spinner size='small' />
+                ) : (
+                  'Edit'
+                )}
               </EditCellContent>
             )}
           </EditDeleteCell>
@@ -269,15 +278,17 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             )}
           </td>
           <EditDeleteCell>
-            {isActionLoading && actionLoading.field === 'Medium' ? (
-              <div>Loading...</div>
-            ) : editField === 'Medium' ? (
+            {editField === 'Medium' ? (
               <EditConfirmButtons handleConfirmEdit={handleConfirmEdit} />
             ) : (
               <EditCellContent
                 onClick={() => setEditField('Medium')}
                 isClickDisabled={actionLoading.loading}>
-                Edit
+                {isActionLoading && actionLoading.field === 'Medium' ? (
+                  <Spinner size='small' />
+                ) : (
+                  'Edit'
+                )}
               </EditCellContent>
             )}
           </EditDeleteCell>
@@ -299,15 +310,17 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             )}
           </td>
           <EditDeleteCell>
-            {isActionLoading && actionLoading.field === 'Date' ? (
-              <div>Loading...</div>
-            ) : editField === 'Date' ? (
+            {editField === 'Date' ? (
               <EditConfirmButtons handleConfirmEdit={handleConfirmEdit} />
             ) : (
               <EditCellContent
                 onClick={() => setEditField('Date')}
                 isClickDisabled={actionLoading.loading}>
-                Edit
+                {isActionLoading && actionLoading.field === 'Date' ? (
+                  <Spinner size='small' />
+                ) : (
+                  'Edit'
+                )}
               </EditCellContent>
             )}
           </EditDeleteCell>

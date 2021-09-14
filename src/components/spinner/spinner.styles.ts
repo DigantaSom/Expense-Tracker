@@ -25,3 +25,8 @@ export const SpinnerContainer = styled.img`
     }
   }
 `;
+
+export const SmallSpinner = styled.img`
+  width: 20px;
+  height: 20px;
+`;

@@ -56,6 +56,12 @@ const reportReducer = (
         ...state,
         report: action.payload,
         loading: false,
+        actionLoading: {
+          ...state.actionLoading,
+          loading: false,
+          id: '',
+          field: '',
+        },
         error: '',
       };
     case FETCH_EXPENSE_REPORT_FAILURE:
@@ -63,6 +69,12 @@ const reportReducer = (
         ...state,
         report: [],
         loading: false,
+        actionLoading: {
+          ...state.actionLoading,
+          loading: false,
+          id: '',
+          field: '',
+        },
         error: action.payload,
       };
 
