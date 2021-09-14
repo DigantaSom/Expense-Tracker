@@ -1,3 +1,4 @@
+import { ItemFieldType } from '../../types';
 import {
   ReportActionType,
   IReportItem,
@@ -7,18 +8,32 @@ import {
   ADD_REPORT_ITEM_START,
   ADD_REPORT_ITEM_SUCCESS,
   ADD_REPORT_ITEM_FAILURE,
+  EDIT_REPORT_ITEM_START,
+  EDIT_REPORT_ITEM_SUCCESS,
+  EDIT_REPORT_ITEM_SUCCESS_DIFFERENT_MONTH_OR_YEAR,
+  EDIT_REPORT_ITEM_FAILURE,
   CLEAR_REPORT,
 } from './report.types';
 
 interface IDefaultState {
   report: IReportItem[];
   loading: boolean;
+  actionLoading: {
+    loading: boolean;
+    id: string;
+    field: ItemFieldType;
+  };
   error: string;
 }
 
 const defaultState: IDefaultState = {
   report: [],
   loading: false,
+  actionLoading: {
+    loading: false,
+    id: '',
+    field: '',
+  },
   error: '',
 };
 
@@ -64,6 +79,54 @@ const reportReducer = (
       return {
         ...state,
         loading: false,
+        error: action.payload,
+      };
+
+    // Edit an existing report item
+    case EDIT_REPORT_ITEM_START:
+      return {
+        ...state,
+        actionLoading: {
+          ...state.actionLoading,
+          loading: true,
+          ...action.payload,
+        },
+      };
+    case EDIT_REPORT_ITEM_SUCCESS:
+      return {
+        ...state,
+        report: state.report.map(item =>
+          item.id === action.payload.id ? action.payload : item,
+        ),
+        actionLoading: {
+          ...state.actionLoading,
+          loading: false,
+          id: '',
+          field: '',
+        },
+        error: '',
+      };
+    case EDIT_REPORT_ITEM_SUCCESS_DIFFERENT_MONTH_OR_YEAR:
+      return {
+        ...state,
+        report: state.report.filter(item => item.id !== action.payload.reportId),
+        actionLoading: {
+          ...state.actionLoading,
+          loading: false,
+          id: '',
+          field: '',
+        },
+        error: '',
+      };
+    case EDIT_REPORT_ITEM_FAILURE:
+      return {
+        ...state,
+        actionLoading: {
+          ...state.actionLoading,
+          loading: false,
+          id: '',
+          field: '',
+        },
         error: action.payload,
       };
 

@@ -93,7 +93,6 @@ const CreateReport: FC = () => {
           name='date'
           value={date}
           handleChange={handleChange}
-          label={''}
           required
           box
         />

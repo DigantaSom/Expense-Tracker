@@ -3,16 +3,23 @@ import styled from 'styled-components';
 import UI from '../../constants/UI';
 import Colors from '../../constants/Colors';
 
+interface CellContentProps {
+  isClickDisabled?: boolean;
+}
+
 export const ReportItemContainer = styled.table`
+  width: 100%;
   /* border-collapse: collapse; */
   border-collapse: separate;
   border-spacing: 0;
-  width: 100%;
   margin: 35px 0;
   border-radius: 10px;
 
-  tr:hover {
+  tr:hover td:not([rowspan]) {
     background-color: #ddd;
+  }
+  tr:hover td[rowspan] {
+    background: none;
   }
   thead {
     font-family: 'Open Sans Condensed', sans-serif;
@@ -30,7 +37,10 @@ export const ReportItemContainer = styled.table`
   tr:last-child td:first-child {
     border-bottom-left-radius: 10px;
   }
-  tr:last-child td:last-child {
+  /* tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+  } */
+  tbody tr:first-child td:last-child {
     border-bottom-right-radius: 10px;
   }
 `;
@@ -51,10 +61,40 @@ export const ItemHeading = styled.th`
 
 export const ItemSubheading = styled.td`
   font-weight: bold;
-  width: 30%;
 `;
 
 export const ItemParagraph = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const EditDeleteCell = styled.td`
+  text-align: center;
+`;
+
+export const EditCellContent = styled.div<CellContentProps>`
+  background-color: white;
+  border: 1px solid black;
+  padding: 5px 0;
+  border-radius: 5px;
+  pointer-events: ${props => (props.isClickDisabled ? 'none' : 'auto')};
+
+  :hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
+  }
+`;
+
+export const DeleteCellContent = styled.div<CellContentProps>`
+  background-color: #ff0e0e;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  pointer-events: ${props => (props.isClickDisabled ? 'none' : 'auto')};
+
+  :hover {
+    cursor: pointer;
+    background-color: #ee0e0e;
+  }
 `;
