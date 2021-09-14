@@ -39,15 +39,16 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
   const { actionLoading } = useSelector((state: RootState) => state.report);
 
   const [editField, setEditField] = useState<ItemFieldType>('');
+  const [isActionLoading, setIsActionLoading] = useState(false);
   const [editedFormData, setEditedFormData] = useState({
     editedItem: item,
     editedDescription: reportItem.description ? reportItem.description : '',
     editedCost: cost,
     editedRecipient: recipient,
     editedMedium: medium,
-    editedDate: date,
+    editedDate: dayjs(date).format('YYYY-MM-DD'),
   });
-  const [isActionLoading, setIsActionLoading] = useState(false);
+  const [editedTime, setEditedTime] = useState(dayjs(date).format('hh:mm'));
 
   useEffect(() => {
     if (actionLoading.loading && actionLoading.id === reportItemId) {
@@ -81,7 +82,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
       cost: editedCost,
       recipient: editedRecipient,
       medium: editedMedium,
-      date: new Date(editedDate).toISOString(),
+      date: new Date(`${editedDate}T${editedTime}`).toISOString(),
     };
 
     if (confirmType === 'Confirmed' && currentUser) {
@@ -158,7 +159,11 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             <DeleteCellContent
               onClick={handleDeleteItem}
               isClickDisabled={actionLoading.loading}>
-              {isActionLoading ? <Spinner size='small' /> : 'Delete Item'}
+              {isActionLoading && editField !== '' ? (
+                <Spinner size='small' />
+              ) : (
+                'Delete Item'
+              )}
             </DeleteCellContent>
           </EditDeleteCell>
         </tr>
@@ -298,15 +303,26 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
           <ItemSubheading>Date</ItemSubheading>
           <td>
             {editField === 'Date' ? (
-              <FormInput
-                type='date'
-                name='editedDate'
-                value={dayjs(editedDate).format('YYYY-MM-DD')}
-                handleChange={handleChange}
-                required
-              />
+              <>
+                <FormInput
+                  type='date'
+                  name='editedDate'
+                  value={dayjs(editedDate).format('YYYY-MM-DD')}
+                  handleChange={handleChange}
+                  required
+                />
+                <FormInput
+                  type='time'
+                  name='editedTime'
+                  value={editedTime}
+                  handleChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setEditedTime(e.target.value)
+                  }
+                  required
+                />
+              </>
             ) : (
-              dayjs(date).format('DD MMMM[, ]YYYY')
+              dayjs(date).format('hh:mm A [-] DD MMMM[, ]YYYY')
             )}
           </td>
           <EditDeleteCell>

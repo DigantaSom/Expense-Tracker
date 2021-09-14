@@ -29,6 +29,7 @@ const CreateReport: FC = () => {
     medium: '',
     date: '',
   });
+  const [time, setTime] = useState('00:00');
   const [dateInHeading, setDateInHeading] = useState('');
 
   const { item, description, recipient, cost, medium, date } = formData;
@@ -57,7 +58,11 @@ const CreateReport: FC = () => {
     if (currentUser) {
       dispatch(
         addReportItem(
-          { ...formData, cost: parseFloat(cost), date: new Date(date).toISOString() },
+          {
+            ...formData,
+            cost: parseFloat(cost),
+            date: new Date(`${date}T${time}`).toISOString(),
+          },
           currentUser,
           redirectTo,
           history,
@@ -94,6 +99,13 @@ const CreateReport: FC = () => {
           value={date}
           handleChange={handleChange}
           required
+          box
+        />
+        <FormInput
+          type='time'
+          name='time'
+          value={time}
+          handleChange={(e: ChangeEvent<HTMLInputElement>) => setTime(e.target.value)}
           box
         />
         <FormInput
