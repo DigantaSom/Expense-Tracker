@@ -321,6 +321,8 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                   required
                 />
               </>
+            ) : editedTime === '12:00' ? (
+              dayjs(date).format('DD MMMM[, ]YYYY')
             ) : (
               dayjs(date).format('hh:mm A [-] DD MMMM[, ]YYYY')
             )}
