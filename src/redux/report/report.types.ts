@@ -14,6 +14,10 @@ export const EDIT_REPORT_ITEM_SUCCESS_DIFFERENT_MONTH_OR_YEAR =
   'EDIT_REPORT_ITEM_SUCCESS_DIFFERENT_MONTH_OR_YEAR';
 export const EDIT_REPORT_ITEM_FAILURE = 'EDIT_REPORT_ITEM_FAILURE';
 
+export const DELETE_REPORT_ITEM_START = 'DELETE_REPORT_ITEM_START';
+export const DELETE_REPORT_ITEM_SUCCESS = 'DELETE_REPORT_ITEM_SUCCESS';
+export const DELETE_REPORT_ITEM_FAILURE = 'DELETE_REPORT_ITEM_FAILURE';
+
 export const CLEAR_REPORT = 'CLEAR_REPORT';
 
 export interface IReportItem {
@@ -87,6 +91,28 @@ export type EditReportItemDispatchType =
   | IEditReportItemSuccess_differentMonthOrYear
   | IEditReportItemFailure;
 
+// Delete a report item
+export interface IDeleteReportItemStart {
+  type: typeof DELETE_REPORT_ITEM_START;
+  payload: {
+    reportId: string;
+  };
+}
+export interface IDeleteReportItemSuccess {
+  type: typeof DELETE_REPORT_ITEM_SUCCESS;
+  payload: {
+    reportId: string;
+  };
+}
+export interface IDeleteReportItemFailure {
+  type: typeof DELETE_REPORT_ITEM_FAILURE;
+  payload: string;
+}
+export type DeleteReportItemDispatchType =
+  | IDeleteReportItemStart
+  | IDeleteReportItemSuccess
+  | IDeleteReportItemFailure;
+
 // Clear Report state
 export interface IClearReport {
   type: typeof CLEAR_REPORT;
@@ -97,4 +123,5 @@ export type ReportActionType =
   | FetchExpenseReportDispatchType
   | AddReportItemDispatchType
   | EditReportItemDispatchType
+  | DeleteReportItemDispatchType
   | IClearReport;

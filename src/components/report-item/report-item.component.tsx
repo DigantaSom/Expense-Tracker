@@ -3,7 +3,11 @@ import dayjs from 'dayjs';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { editReportItem, editReportItemDate } from '../../redux/report/report.actions';
+import {
+  editReportItem,
+  editReportItemDate,
+  deleteReportItem,
+} from '../../redux/report/report.actions';
 
 import { ItemFieldType, ConfirmType } from '../../types';
 import { IReportItem } from '../../redux/report/report.types';
@@ -90,6 +94,15 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
     setEditField('');
   };
 
+  const handleDeleteItem = () => {
+    if (!window.confirm('Are you sure you want to delete this Report Item?')) {
+      return;
+    }
+    if (currentUser) {
+      dispatch(deleteReportItem(reportItemId as string, date, currentUser));
+    }
+  };
+
   return (
     <ReportItemContainer>
       <colgroup>
@@ -139,7 +152,9 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             )}
           </EditDeleteCell>
           <EditDeleteCell rowSpan={6}>
-            <DeleteCellContent isClickDisabled={actionLoading.loading}>
+            <DeleteCellContent
+              onClick={handleDeleteItem}
+              isClickDisabled={actionLoading.loading}>
               Delete Item
             </DeleteCellContent>
           </EditDeleteCell>

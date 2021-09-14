@@ -29,6 +29,10 @@ import {
   EDIT_REPORT_ITEM_SUCCESS,
   EDIT_REPORT_ITEM_SUCCESS_DIFFERENT_MONTH_OR_YEAR,
   EDIT_REPORT_ITEM_FAILURE,
+  DeleteReportItemDispatchType,
+  DELETE_REPORT_ITEM_START,
+  DELETE_REPORT_ITEM_SUCCESS,
+  DELETE_REPORT_ITEM_FAILURE,
   IClearReport,
   CLEAR_REPORT,
 } from './report.types';
@@ -296,6 +300,67 @@ export const editReportItemDate =
         payload: err.message,
       });
       alert('Failed to edit expense report item.');
+    }
+  };
+
+// Delete a report item
+export const deleteReportItem =
+  (id: string, date: string, currentUser: IUser) =>
+  async (dispatch: Dispatch<DeleteReportItemDispatchType>) => {
+    dispatch({
+      type: DELETE_REPORT_ITEM_START,
+      payload: {
+        reportId: id,
+      },
+    });
+
+    const year = dayjs(date).format('YYYY');
+    const month = dayjs(date).format('MMMM');
+
+    const reportsYearDocRef = doc(
+      firestore,
+      'reports',
+      currentUser.id,
+      year,
+      currentUser.id,
+    );
+    const reportItemRef = doc(reportsYearDocRef, month, id);
+
+    const batch = writeBatch(firestore);
+
+    try {
+      const reportItemSnapshot = await getDoc(reportItemRef);
+      if (!reportItemSnapshot.exists()) {
+        dispatch({
+          type: DELETE_REPORT_ITEM_FAILURE,
+          payload: 'Found no item to delete.',
+        });
+        alert('Found no item to delete.');
+        return;
+      }
+
+      batch.delete(reportItemRef);
+
+      const monthReportItemCountPropertyName = `${month.toLowerCase()}${year}ReportItemCount`;
+      batch.update(reportsYearDocRef, {
+        [monthReportItemCountPropertyName]: increment(-1),
+      });
+
+      await batch.commit();
+
+      dispatch({
+        type: DELETE_REPORT_ITEM_SUCCESS,
+        payload: {
+          reportId: id,
+        },
+      });
+      alert('Item deleted successfully.');
+    } catch (err: any) {
+      dispatch({
+        type: DELETE_REPORT_ITEM_FAILURE,
+        payload: err.message,
+      });
+      alert('Failed to delete the report item.');
     }
   };
 

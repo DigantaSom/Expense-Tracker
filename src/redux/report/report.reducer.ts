@@ -12,6 +12,9 @@ import {
   EDIT_REPORT_ITEM_SUCCESS,
   EDIT_REPORT_ITEM_SUCCESS_DIFFERENT_MONTH_OR_YEAR,
   EDIT_REPORT_ITEM_FAILURE,
+  DELETE_REPORT_ITEM_START,
+  DELETE_REPORT_ITEM_SUCCESS,
+  DELETE_REPORT_ITEM_FAILURE,
   CLEAR_REPORT,
 } from './report.types';
 
@@ -119,6 +122,41 @@ const reportReducer = (
         error: '',
       };
     case EDIT_REPORT_ITEM_FAILURE:
+      return {
+        ...state,
+        actionLoading: {
+          ...state.actionLoading,
+          loading: false,
+          id: '',
+          field: '',
+        },
+        error: action.payload,
+      };
+
+    // Delete a report item
+    case DELETE_REPORT_ITEM_START:
+      return {
+        ...state,
+        actionLoading: {
+          ...state.actionLoading,
+          loading: true,
+          id: action.payload.reportId,
+          field: '',
+        },
+      };
+    case DELETE_REPORT_ITEM_SUCCESS:
+      return {
+        ...state,
+        report: state.report.filter(item => item.id !== action.payload.reportId),
+        actionLoading: {
+          ...state.actionLoading,
+          loading: false,
+          id: '',
+          field: '',
+        },
+        error: '',
+      };
+    case DELETE_REPORT_ITEM_FAILURE:
       return {
         ...state,
         actionLoading: {
