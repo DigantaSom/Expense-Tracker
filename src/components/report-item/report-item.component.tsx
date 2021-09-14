@@ -76,7 +76,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
       cost: editedCost,
       recipient: editedRecipient,
       medium: editedMedium,
-      date: editedDate,
+      date: new Date(editedDate).toISOString(),
     };
 
     if (confirmType === 'Confirmed' && currentUser) {
