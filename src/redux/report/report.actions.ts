@@ -10,6 +10,8 @@ import {
   getDoc,
   getDocs,
   updateDoc,
+  query,
+  orderBy,
 } from 'firebase/firestore';
 import { firestore } from '../../firebase/firebase.utils';
 
@@ -56,9 +58,10 @@ export const fetchExpenseReport =
       currentUser.id,
       month,
     );
+    const q = query(reportCollectionRef, orderBy('date'));
 
     try {
-      const reportSnapshot = await getDocs(reportCollectionRef);
+      const reportSnapshot = await getDocs(q);
 
       if (reportSnapshot.empty) {
         dispatch({
