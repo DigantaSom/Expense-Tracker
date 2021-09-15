@@ -1,10 +1,15 @@
-import { ItemFieldType } from '../../types';
+import { MonthType, ItemFieldType } from '../../types';
 import {
   ReportActionType,
   IReportItem,
+  IReportRef,
   FETCH_EXPENSE_REPORT_START,
   FETCH_EXPENSE_REPORT_SUCCESS,
   FETCH_EXPENSE_REPORT_FAILURE,
+  FETCH_REPORT_REFS_BY_YEAR_START,
+  FETCH_REPORT_REFS_BY_YEAR_SUCCESS,
+  FETCH_REPORT_REFS_BY_YEAR_FAILURE,
+  SET_SELECTED_MONTH,
   ADD_REPORT_ITEM_START,
   ADD_REPORT_ITEM_SUCCESS,
   ADD_REPORT_ITEM_FAILURE,
@@ -20,6 +25,7 @@ import {
 
 interface IDefaultState {
   report: IReportItem[];
+  reportRefs: IReportRef & { selectedMonth: MonthType };
   loading: boolean;
   actionLoading: {
     loading: boolean;
@@ -31,6 +37,11 @@ interface IDefaultState {
 
 const defaultState: IDefaultState = {
   report: [],
+  reportRefs: {
+    year: '',
+    months: [],
+    selectedMonth: '',
+  },
   loading: false,
   actionLoading: {
     loading: false,
@@ -76,6 +87,37 @@ const reportReducer = (
           field: '',
         },
         error: action.payload,
+      };
+
+    // Fetch expense report refs by their Year
+    case FETCH_REPORT_REFS_BY_YEAR_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_REPORT_REFS_BY_YEAR_SUCCESS:
+      return {
+        ...state,
+        report: [],
+        reportRefs: { ...action.payload, selectedMonth: '' },
+        loading: false,
+        error: '',
+      };
+    case FETCH_REPORT_REFS_BY_YEAR_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    // Set selected month in redux
+    case SET_SELECTED_MONTH:
+      return {
+        ...state,
+        reportRefs: {
+          ...state.reportRefs,
+          selectedMonth: action.payload,
+        },
       };
 
     // Add a new report item

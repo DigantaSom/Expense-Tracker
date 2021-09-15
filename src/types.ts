@@ -1,5 +1,20 @@
 export type RedirectToType = 'Same' | 'Home';
 
+export type MonthType =
+  | 'January'
+  | 'February'
+  | 'March'
+  | 'April'
+  | 'May'
+  | 'June'
+  | 'July'
+  | 'August'
+  | 'September'
+  | 'October'
+  | 'November'
+  | 'December'
+  | '';
+
 export type ItemFieldType =
   | 'Name'
   | 'Description'

@@ -1,43 +1,87 @@
-import { FC } from 'react';
-import dayjs from 'dayjs';
+import { FC, useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { fetchReportRefs } from '../../redux/report/report.actions';
 
-import SelectYearMonth from '../../components/select-year-month/select-year-month.component';
+import FormInput from '../../components/form-input/form-input.component';
+import CustomButton from '../../components/custom-button/custom-button.component';
 import Spinner from '../../components/spinner/spinner.component';
-import ReportItem from '../../components/report-item/report-item.component';
+import ReportTile from '../../components/report-tile/report-tile.component';
 
-import { ProfilePageContainer, Title, ReportTitle } from './profile.styles';
+import { Profile2Container, Form, Title, ReportTilesContainer } from './profile.styles';
 
-const ProfilePage: FC = () => {
-  const { report, loading } = useSelector((state: RootState) => state.report);
+const Profile2Page: FC = () => {
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { reportRefs, loading: reportLoading } = useSelector(
+    (state: RootState) => state.report,
+  );
 
-  if (loading) {
-    return <Spinner />;
-  }
+  const [year, setYear] = useState(reportRefs.year);
+  const [reportRefsTitle, setReportRefsTitle] = useState('');
+
+  useEffect(() => {
+    if (reportRefs.year) {
+      if (reportRefs.months.length > 1) {
+        setReportRefsTitle(`Your Expense Reports for the year ${reportRefs.year}`);
+      } else {
+        setReportRefsTitle(`Your Expense Report for the year ${reportRefs.year}`);
+      }
+    }
+  }, [reportRefs.year, reportRefs.months, reportRefsTitle]);
+
+  useEffect(() => {
+    if (year.length === 4 && reportRefs.year && currentUser) {
+      dispatch(fetchReportRefs(reportRefs.year, currentUser));
+    }
+  }, [year.length, reportRefs.year, currentUser, dispatch]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setYear(e.target.value);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!year || !currentUser) {
+      return;
+    }
+    dispatch(fetchReportRefs(year, currentUser));
+  };
 
   return (
-    <ProfilePageContainer>
-      <Title>Please select the Year and Month of your Expense Report</Title>
+    <Profile2Container>
+      <Form onSubmit={handleSubmit}>
+        <FormInput
+          type='number'
+          min='1900'
+          max={new Date().getFullYear()}
+          name='year'
+          value={year}
+          handleChange={handleChange}
+          placeholder='Year'
+          box
+          required
+        />
 
-      <SelectYearMonth />
+        <CustomButton type='submit' rounded>
+          Get Report
+        </CustomButton>
+      </Form>
 
-      {report.length > 0 && (
-        <>
-          <hr />
+      <Title>{reportRefsTitle}</Title>
 
-          <ReportTitle>
-            Expense Report for {dayjs(report[0].date).format('MMMM[, ]YYYY')}
-          </ReportTitle>
-
-          {report.map((reportItem, index) => (
-            <ReportItem key={reportItem.id} index={index + 1} reportItem={reportItem} />
+      {reportLoading ? (
+        <Spinner />
+      ) : reportRefs.months.length === 0 ? null : (
+        <ReportTilesContainer>
+          {reportRefs.months.map(reportMonth => (
+            <ReportTile key={reportMonth} year={reportRefs.year} month={reportMonth} />
           ))}
-        </>
+        </ReportTilesContainer>
       )}
-    </ProfilePageContainer>
+    </Profile2Container>
   );
 };
 
-export default ProfilePage;
+export default Profile2Page;

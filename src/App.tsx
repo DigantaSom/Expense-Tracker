@@ -14,6 +14,7 @@ import HomePage from './pages/home/home.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import CreateReportPage from './pages/create-report/create-report.component';
 import ProfilePage from './pages/profile/profile.component';
+import ReportPage from './pages/report-page/report-page.component';
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,11 @@ const App: FC = () => {
         <PrivateRoute
           path='/profile'
           component={ProfilePage}
+          isAuthenticated={!!currentUser}
+        />
+        <PrivateRoute
+          path='/report'
+          component={ReportPage}
           isAuthenticated={!!currentUser}
         />
       </Switch>
