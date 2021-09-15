@@ -9,7 +9,7 @@ import CustomButton from '../../components/custom-button/custom-button.component
 import Spinner from '../../components/spinner/spinner.component';
 import ReportTile from '../../components/report-tile/report-tile.component';
 
-import { Profile2Container, Form, Title, ReportTilesContainer } from './profile.styles';
+import { ProfileContainer, Form, Title, ReportTilesContainer } from './profile.styles';
 
 const Profile2Page: FC = () => {
   const dispatch = useDispatch();
@@ -50,7 +50,7 @@ const Profile2Page: FC = () => {
   };
 
   return (
-    <Profile2Container>
+    <ProfileContainer>
       <Form onSubmit={handleSubmit}>
         <FormInput
           type='number'
@@ -80,7 +80,7 @@ const Profile2Page: FC = () => {
           ))}
         </ReportTilesContainer>
       )}
-    </Profile2Container>
+    </ProfileContainer>
   );
 };
 

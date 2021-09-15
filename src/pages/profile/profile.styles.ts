@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Profile2Container = styled.div`
+export const ProfileContainer = styled.div`
   width: 850px;
   margin: 30px auto;
 `;
