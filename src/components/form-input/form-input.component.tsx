@@ -1,6 +1,6 @@
 import { FC, ChangeEvent } from 'react';
 
-import { Group, Input, Label } from './form-input.styles';
+import { InputGroup, Input, Label } from './form-input.styles';
 
 interface FormInputProps {
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -11,14 +11,14 @@ interface FormInputProps {
 
 const FormInput: FC<FormInputProps> = ({ handleChange, label, box, ...otherProps }) => {
   return (
-    <Group>
+    <InputGroup className='input-group'>
       <Input onChange={handleChange} box={!!box} {...otherProps} />
       {label && (
         <Label shrink={!!otherProps.value.length} box={!!box}>
           {label}
         </Label>
       )}
-    </Group>
+    </InputGroup>
   );
 };
 

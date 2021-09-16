@@ -61,4 +61,13 @@ export const Button = styled.button<CustomButtonProps>`
   justify-content: center;
 
   ${getButtonStyles}
+
+  @media screen and (max-width: 380px) {
+    min-width: 120px;
+    padding: 0 20px;
+  }
+
+  @media screen and (max-width: 315px) {
+    padding: 0 5px;
+  }
 `;

@@ -26,6 +26,10 @@ export const LandingInfo = styled.div`
   :hover {
     transform: scale(1.1);
   }
+
+  @media screen and (max-width: 440px) {
+    padding: 0 20px;
+  }
 `;
 
 export const ButtonContainer = styled(Link)`
@@ -38,4 +42,16 @@ export const ButtonContainer = styled(Link)`
   outline: none;
   border-radius: 0.5rem;
   box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.8);
+  display: flex;
+  text-align: center;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.3rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  @media screen and (max-width: 360px) {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+  }
 `;

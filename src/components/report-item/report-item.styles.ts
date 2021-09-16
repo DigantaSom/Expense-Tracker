@@ -45,6 +45,32 @@ export const ReportItemContainer = styled.table`
   }
 `;
 
+export const Column1 = styled.col`
+  width: 20%;
+
+  @media screen and (max-width: 640px) {
+    width: 15%;
+  }
+`;
+export const Column2 = styled.col`
+  width: 65%;
+
+  @media screen and (max-width: 640px) {
+    width: 70%;
+  }
+
+  @media screen and (max-width: 540px) {
+    width: 75%;
+  }
+`;
+export const Column3 = styled.col`
+  width: 15%;
+
+  @media screen and (max-width: 540px) {
+    width: 10%;
+  }
+`;
+
 export const ItemRootHeader = styled.th`
   font-size: 26px;
   background-color: ${Colors.primary};
@@ -63,13 +89,11 @@ export const ItemSubheading = styled.td`
   font-weight: bold;
 `;
 
-export const ItemParagraph = styled.div`
-  display: flex;
-  align-items: center;
-`;
+export const ItemInfo = styled.div``;
 
 export const EditDeleteCell = styled.td`
   text-align: center;
+  padding: 7px;
 `;
 
 export const EditCellContent = styled.div<CellContentProps>`
@@ -89,7 +113,7 @@ export const EditCellContent = styled.div<CellContentProps>`
 export const DeleteCellContent = styled.div<CellContentProps>`
   background-color: #ff0e0e;
   color: white;
-  padding: 10px;
+  padding: 7px;
   border-radius: 5px;
   pointer-events: ${props => (props.isClickDisabled ? 'none' : 'auto')};
 

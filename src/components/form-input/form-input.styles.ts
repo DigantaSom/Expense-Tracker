@@ -55,7 +55,7 @@ const getInputStyles = (props: InputProps): FlattenSimpleInterpolation => {
   return inputStyles;
 };
 
-export const Group = styled.div`
+export const InputGroup = styled.div`
   margin: 45px 0;
   position: relative;
 `;

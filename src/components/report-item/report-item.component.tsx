@@ -12,19 +12,26 @@ import {
 import { ItemFieldType, ConfirmType } from '../../types';
 import { IReportItem } from '../../redux/report/report.types';
 
+import Spinner from '../spinner/spinner.component';
 import FormInput from '../form-input/form-input.component';
 import EditConfirmButtons from '../edit-confirm-buttons/edit-confirm-buttons.component';
 
+import { AiOutlineEdit } from 'react-icons/ai';
+import { FiTrash2 } from 'react-icons/fi';
+
 import {
   ReportItemContainer,
+  Column1,
+  Column2,
+  Column3,
   ItemRootHeader,
   ItemHeading,
   ItemSubheading,
+  ItemInfo,
   EditDeleteCell,
   EditCellContent,
   DeleteCellContent,
 } from './report-item.styles';
-import Spinner from '../spinner/spinner.component';
 
 interface ReportItemProps {
   index: number;
@@ -108,9 +115,9 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
   return (
     <ReportItemContainer>
       <colgroup>
-        <col span={1} style={{ width: '20%' }} />
-        <col span={1} style={{ width: '60%' }} />
-        <col span={1} style={{ width: '20%' }} />
+        <Column1 span={1} />
+        <Column2 span={1} />
+        <Column3 span={1} />
       </colgroup>
 
       <thead>
@@ -137,7 +144,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                 required
               />
             ) : (
-              item
+              <ItemInfo>{item}</ItemInfo>
             )}
           </td>
           <EditDeleteCell>
@@ -150,7 +157,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                 {isActionLoading && actionLoading.field === 'Name' ? (
                   <Spinner size='small' />
                 ) : (
-                  'Edit'
+                  <AiOutlineEdit />
                 )}
               </EditCellContent>
             )}
@@ -162,7 +169,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
               {isActionLoading && editField !== '' ? (
                 <Spinner size='small' />
               ) : (
-                'Delete Item'
+                <FiTrash2 />
               )}
             </DeleteCellContent>
           </EditDeleteCell>
@@ -181,7 +188,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                   required // since, should not edit it empty
                 />
               ) : (
-                reportItem.description
+                <ItemInfo>{reportItem.description}</ItemInfo>
               )}
             </td>
             <EditDeleteCell>
@@ -194,7 +201,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                   {isActionLoading && actionLoading.field === 'Description' ? (
                     <Spinner size='small' />
                   ) : (
-                    'Edit'
+                    <AiOutlineEdit />
                   )}
                 </EditCellContent>
               )}
@@ -215,7 +222,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                 required
               />
             ) : (
-              <>Rs. {cost}</>
+              <ItemInfo>Rs. {cost}</ItemInfo>
             )}
           </td>
           <EditDeleteCell>
@@ -228,7 +235,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                 {isActionLoading && actionLoading.field === 'Cost' ? (
                   <Spinner size='small' />
                 ) : (
-                  'Edit'
+                  <AiOutlineEdit />
                 )}
               </EditCellContent>
             )}
@@ -247,7 +254,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                 required
               />
             ) : (
-              recipient
+              <ItemInfo>{recipient}</ItemInfo>
             )}
           </td>
           <EditDeleteCell>
@@ -260,7 +267,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                 {isActionLoading && actionLoading.field === 'Recipient' ? (
                   <Spinner size='small' />
                 ) : (
-                  'Edit'
+                  <AiOutlineEdit />
                 )}
               </EditCellContent>
             )}
@@ -279,7 +286,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                 required
               />
             ) : (
-              medium
+              <ItemInfo>{medium}</ItemInfo>
             )}
           </td>
           <EditDeleteCell>
@@ -292,7 +299,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                 {isActionLoading && actionLoading.field === 'Medium' ? (
                   <Spinner size='small' />
                 ) : (
-                  'Edit'
+                  <AiOutlineEdit />
                 )}
               </EditCellContent>
             )}
@@ -321,10 +328,12 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                   required
                 />
               </>
-            ) : editedTime === '12:00' ? (
-              dayjs(date).format('DD MMMM[, ]YYYY')
             ) : (
-              dayjs(date).format('hh:mm A [-] DD MMMM[, ]YYYY')
+              <ItemInfo>
+                {dayjs(date).format(
+                  `${editedTime === '12:00' ? '' : 'hh:mm A [-]'} DD MMMM[, ]YYYY`,
+                )}
+              </ItemInfo>
             )}
           </td>
           <EditDeleteCell>
@@ -337,7 +346,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                 {isActionLoading && actionLoading.field === 'Date' ? (
                   <Spinner size='small' />
                 ) : (
-                  'Edit'
+                  <AiOutlineEdit />
                 )}
               </EditCellContent>
             )}

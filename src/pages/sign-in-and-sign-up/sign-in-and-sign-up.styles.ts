@@ -9,4 +9,18 @@ export const Container = styled.div`
   h1 {
     margin: 0;
   }
+
+  @media screen and (max-width: 900px) {
+    width: 90vw;
+  }
+
+  @media screen and (max-width: 880px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 440px) {
+    width: 100vw;
+    padding: 0 20px;
+  }
 `;
