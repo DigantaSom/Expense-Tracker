@@ -107,6 +107,12 @@ const reportReducer = (
       return {
         ...state,
         loading: false,
+        reportRefs: {
+          ...state.reportRefs,
+          year: '',
+          months: [],
+          selectedMonth: '',
+        },
         error: action.payload,
       };
 

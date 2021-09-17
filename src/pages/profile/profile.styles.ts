@@ -34,7 +34,7 @@ export const Form = styled.form`
     height: 50px;
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 768px) {
     grid-template-columns: 100%;
 
     .input-group {
@@ -49,15 +49,16 @@ export const Title = styled.h1`
 
   @media screen and (max-width: 768px) {
     font-size: 1.5rem;
+    margin-top: 50px;
   }
 
   @media screen and (max-width: 400px) {
     font-size: 1.3rem;
   }
+`;
 
-  @media screen and (max-width: 600px) {
-    margin-top: 50px;
-  }
+export const NoReportText = styled.h2`
+  text-align: center;
 `;
 
 export const ReportTilesContainer = styled.div`

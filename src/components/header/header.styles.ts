@@ -10,6 +10,10 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  @media screen and (max-width: 900px) {
+    padding: 0 5vw;
+  }
+
   @media screen and (max-width: 440px) {
     padding: 0 20px;
   }
@@ -30,11 +34,11 @@ export const LogoTextSmallScreen = styled.div`
     font-size: 1.3rem;
   }
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 430px) {
     font-size: 1.1rem;
   }
 
-  @media screen and (max-width: 345px) {
+  @media screen and (max-width: 360px) {
     display: none;
   }
 `;

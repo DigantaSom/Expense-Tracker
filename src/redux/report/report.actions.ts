@@ -139,9 +139,9 @@ export const fetchReportRefs =
       if (Object.keys(monthReportCountObj).length === 0) {
         dispatch({
           type: FETCH_REPORT_REFS_BY_YEAR_FAILURE,
-          payload: 'No report found for this year.',
+          payload: `No report found for the year ${year}`,
         });
-        alert('No report found for this year.');
+        // alert('No report found for this year.');
         return;
       }
 

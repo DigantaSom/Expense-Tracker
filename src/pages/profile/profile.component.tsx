@@ -9,27 +9,38 @@ import CustomButton from '../../components/custom-button/custom-button.component
 import Spinner from '../../components/spinner/spinner.component';
 import ReportTile from '../../components/report-tile/report-tile.component';
 
-import { ProfileContainer, Form, Title, ReportTilesContainer } from './profile.styles';
+import {
+  ProfileContainer,
+  Form,
+  Title,
+  NoReportText,
+  ReportTilesContainer,
+} from './profile.styles';
 
 const Profile2Page: FC = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: RootState) => state.user);
-  const { reportRefs, loading: reportLoading } = useSelector(
-    (state: RootState) => state.report,
-  );
+  const {
+    reportRefs,
+    loading: reportLoading,
+    error: reportError,
+  } = useSelector((state: RootState) => state.report);
 
   const [year, setYear] = useState(reportRefs.year);
   const [reportRefsTitle, setReportRefsTitle] = useState('');
 
   useEffect(() => {
     if (reportRefs.year) {
-      if (reportRefs.months.length > 1) {
+      if (reportRefs.months.length > 0) {
         setReportRefsTitle(`Your Expense Reports for the year ${reportRefs.year}`);
       } else {
-        setReportRefsTitle(`Your Expense Report for the year ${reportRefs.year}`);
+        setReportRefsTitle('');
       }
     }
-  }, [reportRefs.year, reportRefs.months, reportRefsTitle]);
+    if (year.length < 4 || !reportRefs.year) {
+      setReportRefsTitle('');
+    }
+  }, [reportRefs.year, reportRefs.months, reportRefsTitle, year]);
 
   useEffect(() => {
     if (year.length === 4 && reportRefs.year && currentUser) {
@@ -43,11 +54,33 @@ const Profile2Page: FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!year || !currentUser) {
+    if (!year || year.length !== 4 || !currentUser) {
       return;
     }
     dispatch(fetchReportRefs(year, currentUser));
   };
+
+  let tilesContent;
+  if (reportLoading) {
+    tilesContent = <Spinner />;
+  } else {
+    if (year.length === 4 && reportRefs.months.length === 0) {
+      tilesContent = <NoReportText>{reportError}</NoReportText>;
+    } else if (year.length === 4 && reportRefs.months.length > 0) {
+      tilesContent = (
+        <ReportTilesContainer>
+          {reportRefs.months.map(reportMonth => (
+            <ReportTile key={reportMonth} year={reportRefs.year} month={reportMonth} />
+          ))}
+        </ReportTilesContainer>
+      );
+    }
+  }
+
+  let buttonContent = 'Get Report';
+  if (year.length === 4) {
+    buttonContent = `Get Report for ${year}`;
+  }
 
   return (
     <ProfileContainer>
@@ -65,21 +98,12 @@ const Profile2Page: FC = () => {
         />
 
         <CustomButton type='submit' rounded>
-          Get Report
+          {buttonContent}
         </CustomButton>
       </Form>
 
       <Title data-aos='fade-up'>{reportRefsTitle}</Title>
-
-      {reportLoading ? (
-        <Spinner />
-      ) : reportRefs.months.length === 0 ? null : (
-        <ReportTilesContainer>
-          {reportRefs.months.map(reportMonth => (
-            <ReportTile key={reportMonth} year={reportRefs.year} month={reportMonth} />
-          ))}
-        </ReportTilesContainer>
-      )}
+      {tilesContent}
     </ProfileContainer>
   );
 };
