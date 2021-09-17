@@ -92,8 +92,12 @@ export const OptionLinkSmallerScreen = styled(OptionLink)`
     padding: 0 1.3rem;
   }
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 500px) {
     padding: 0 0.8rem;
+  }
+
+  @media screen and (max-width: 400px) {
+    padding: 0 0.5rem;
   }
 `;
 
@@ -109,4 +113,9 @@ export const OptionLinkSmallerScreenImage = styled.img`
   width: 35px;
   height: 35px;
   border-radius: 50%;
+
+  @media screen and (max-width: 430px) {
+    width: 30px;
+    height: 30px;
+  }
 `;
