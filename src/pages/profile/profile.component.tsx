@@ -33,6 +33,8 @@ const Profile2Page: FC = () => {
   const [year, setYear] = useState(reportRefs.year);
   const [reportRefsTitle, setReportRefsTitle] = useState('');
 
+  const currentYear = new Date().getFullYear();
+
   useEffect(() => {
     if (reportRefs.year) {
       if (reportRefs.months.length > 0) {
@@ -82,7 +84,7 @@ const Profile2Page: FC = () => {
   }
 
   let buttonContent = 'Get Report';
-  if (year.length === 4) {
+  if (parseInt(year) >= 1900 && parseInt(year) <= currentYear) {
     buttonContent = `Get Report for ${year}`;
   }
 
@@ -92,7 +94,7 @@ const Profile2Page: FC = () => {
         <FormInput
           type='number'
           min='1900'
-          max={new Date().getFullYear()}
+          max={currentYear}
           name='year'
           value={year}
           handleChange={handleChange}
