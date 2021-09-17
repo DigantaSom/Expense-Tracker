@@ -1,7 +1,12 @@
 import { FC, useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
+import {
+  selectReportError,
+  selectReportLoading,
+  selectReportRefs,
+} from '../../redux/report/report.selectors';
 import { fetchReportRefs } from '../../redux/report/report.actions';
 
 import FormInput from '../../components/form-input/form-input.component';
@@ -19,12 +24,11 @@ import {
 
 const Profile2Page: FC = () => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state: RootState) => state.user);
-  const {
-    reportRefs,
-    loading: reportLoading,
-    error: reportError,
-  } = useSelector((state: RootState) => state.report);
+  const currentUser = useSelector(selectCurrentUser);
+
+  const reportRefs = useSelector(selectReportRefs);
+  const reportLoading = useSelector(selectReportLoading);
+  const reportError = useSelector(selectReportError);
 
   const [year, setYear] = useState(reportRefs.year);
   const [reportRefsTitle, setReportRefsTitle] = useState('');

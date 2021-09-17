@@ -1,7 +1,12 @@
 import { FC, useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
+import {
+  selectReport,
+  selectReportLoading,
+  selectReportRefs,
+} from '../../redux/report/report.selectors';
 import { fetchExpenseReport } from '../../redux/report/report.actions';
 
 import Spinner from '../../components/spinner/spinner.component';
@@ -11,12 +16,10 @@ import { ReportPageContainer, Title } from './report-page.styles';
 
 const ReportPage: FC = () => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state: RootState) => state.user);
-  const {
-    reportRefs,
-    report,
-    loading: reportLoading,
-  } = useSelector((state: RootState) => state.report);
+  const currentUser = useSelector(selectCurrentUser);
+  const reportRefs = useSelector(selectReportRefs);
+  const report = useSelector(selectReport);
+  const reportLoading = useSelector(selectReportLoading);
 
   const [reportPageTitle, setReportPageTitle] = useState('');
 

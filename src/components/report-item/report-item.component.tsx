@@ -1,8 +1,12 @@
 import { FC, useState, ChangeEvent, useEffect } from 'react';
 import dayjs from 'dayjs';
 
+import { AiOutlineEdit } from 'react-icons/ai';
+import { FiTrash2 } from 'react-icons/fi';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { selectReportActionLoading } from '../../redux/report/report.selectors';
 import {
   editReportItem,
   editReportItemDate,
@@ -15,9 +19,6 @@ import { IReportItem } from '../../redux/report/report.types';
 import Spinner from '../spinner/spinner.component';
 import FormInput from '../form-input/form-input.component';
 import EditConfirmButtons from '../edit-confirm-buttons/edit-confirm-buttons.component';
-
-import { AiOutlineEdit } from 'react-icons/ai';
-import { FiTrash2 } from 'react-icons/fi';
 
 import {
   ReportItemContainer,
@@ -42,8 +43,8 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
   const { id: reportItemId, item, cost, recipient, medium, date } = reportItem;
 
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state: RootState) => state.user);
-  const { actionLoading } = useSelector((state: RootState) => state.report);
+  const currentUser = useSelector(selectCurrentUser);
+  const reportActionLoading = useSelector(selectReportActionLoading);
 
   const [editField, setEditField] = useState<ItemFieldType>('');
   const [isActionLoading, setIsActionLoading] = useState(false);
@@ -58,12 +59,12 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
   const [editedTime, setEditedTime] = useState(dayjs(date).format('hh:mm'));
 
   useEffect(() => {
-    if (actionLoading.loading && actionLoading.id === reportItemId) {
+    if (reportActionLoading.loading && reportActionLoading.id === reportItemId) {
       setIsActionLoading(true);
     } else {
       setIsActionLoading(false);
     }
-  }, [actionLoading.loading, actionLoading.id, reportItemId]);
+  }, [reportActionLoading.loading, reportActionLoading.id, reportItemId]);
 
   const {
     editedItem,
@@ -153,8 +154,8 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             ) : (
               <EditCellContent
                 onClick={() => setEditField('Name')}
-                isClickDisabled={actionLoading.loading}>
-                {isActionLoading && actionLoading.field === 'Name' ? (
+                isClickDisabled={reportActionLoading.loading}>
+                {isActionLoading && reportActionLoading.field === 'Name' ? (
                   <Spinner size='small' />
                 ) : (
                   <AiOutlineEdit />
@@ -165,7 +166,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
           <EditDeleteCell rowSpan={6}>
             <DeleteCellContent
               onClick={handleDeleteItem}
-              isClickDisabled={actionLoading.loading}>
+              isClickDisabled={reportActionLoading.loading}>
               {isActionLoading && editField !== '' ? (
                 <Spinner size='small' />
               ) : (
@@ -197,8 +198,8 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
               ) : (
                 <EditCellContent
                   onClick={() => setEditField('Description')}
-                  isClickDisabled={actionLoading.loading}>
-                  {isActionLoading && actionLoading.field === 'Description' ? (
+                  isClickDisabled={reportActionLoading.loading}>
+                  {isActionLoading && reportActionLoading.field === 'Description' ? (
                     <Spinner size='small' />
                   ) : (
                     <AiOutlineEdit />
@@ -231,8 +232,8 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             ) : (
               <EditCellContent
                 onClick={() => setEditField('Cost')}
-                isClickDisabled={actionLoading.loading}>
-                {isActionLoading && actionLoading.field === 'Cost' ? (
+                isClickDisabled={reportActionLoading.loading}>
+                {isActionLoading && reportActionLoading.field === 'Cost' ? (
                   <Spinner size='small' />
                 ) : (
                   <AiOutlineEdit />
@@ -263,8 +264,8 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             ) : (
               <EditCellContent
                 onClick={() => setEditField('Recipient')}
-                isClickDisabled={actionLoading.loading}>
-                {isActionLoading && actionLoading.field === 'Recipient' ? (
+                isClickDisabled={reportActionLoading.loading}>
+                {isActionLoading && reportActionLoading.field === 'Recipient' ? (
                   <Spinner size='small' />
                 ) : (
                   <AiOutlineEdit />
@@ -295,8 +296,8 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             ) : (
               <EditCellContent
                 onClick={() => setEditField('Medium')}
-                isClickDisabled={actionLoading.loading}>
-                {isActionLoading && actionLoading.field === 'Medium' ? (
+                isClickDisabled={reportActionLoading.loading}>
+                {isActionLoading && reportActionLoading.field === 'Medium' ? (
                   <Spinner size='small' />
                 ) : (
                   <AiOutlineEdit />
@@ -342,8 +343,8 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             ) : (
               <EditCellContent
                 onClick={() => setEditField('Date')}
-                isClickDisabled={actionLoading.loading}>
-                {isActionLoading && actionLoading.field === 'Date' ? (
+                isClickDisabled={reportActionLoading.loading}>
+                {isActionLoading && reportActionLoading.field === 'Date' ? (
                   <Spinner size='small' />
                 ) : (
                   <AiOutlineEdit />

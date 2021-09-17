@@ -3,7 +3,8 @@ import { useHistory } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { selectReportLoading } from '../../redux/report/report.selectors';
 import { addReportItem } from '../../redux/report/report.actions';
 
 import { RedirectToType } from '../../types';
@@ -16,8 +17,8 @@ import { CreateReportContainer, Title, ButtonsContainer } from './create-report.
 
 const CreateReport: FC = () => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state: RootState) => state.user);
-  const { loading: reportLoading } = useSelector((state: RootState) => state.report);
+  const currentUser = useSelector(selectCurrentUser);
+  const reportLoading = useSelector(selectReportLoading);
 
   const history = useHistory();
 

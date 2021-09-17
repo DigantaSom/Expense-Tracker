@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { signOutAction } from '../../redux/user/user.actions';
 
 import { FaPlus } from 'react-icons/fa';
@@ -22,7 +22,7 @@ import {
 
 const Header: FC = () => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const currentUser = useSelector(selectCurrentUser);
 
   const guestLinks = (
     <>

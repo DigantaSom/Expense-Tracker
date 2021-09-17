@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 import LandingImage from '../../img/landing-image.jpg';
 import getFirstName from '../../utils/getFirstName';
@@ -15,7 +15,7 @@ import {
 } from './landing.styles';
 
 const DefaultLanding: FC = () => {
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const currentUser = useSelector(selectCurrentUser);
 
   return (
     <LandingContainer>

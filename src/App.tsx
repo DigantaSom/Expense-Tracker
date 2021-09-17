@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './redux/store';
+import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
 import GlobalStyle from './global.styles';
@@ -18,7 +18,7 @@ import ReportPage from './pages/report-page/report-page.component';
 
 const App: FC = () => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
     dispatch(checkUserSession());
