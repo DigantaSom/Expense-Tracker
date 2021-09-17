@@ -40,10 +40,19 @@ const Header: FC = () => {
         <FaPlus />
       </OptionLinkSmallerScreen>
 
-      <OptionLink to='/profile'>My Profile</OptionLink>
-      <OptionLinkSmallerScreenImage to='/profile'>
-        <img src={currentUser?.photoURL ? currentUser.photoURL : NoDp} alt='Profile' />
-      </OptionLinkSmallerScreenImage>
+      <OptionLink to='/profile'>
+        <OptionLinkSmallerScreenImage
+          src={currentUser?.photoURL ? currentUser.photoURL : NoDp}
+          alt='Profile'
+        />{' '}
+        <p>Profile</p>
+      </OptionLink>
+      <OptionLinkSmallerScreen to='/profile'>
+        <OptionLinkSmallerScreenImage
+          src={currentUser?.photoURL ? currentUser.photoURL : NoDp}
+          alt='Profile'
+        />{' '}
+      </OptionLinkSmallerScreen>
 
       <OptionLink as='div' onClick={() => dispatch(signOutAction())}>
         Sign Out

@@ -61,9 +61,15 @@ export const OptionLink = styled(Link)`
   font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 
   :last-child {
     padding-right: 0;
+  }
+
+  img {
+    margin-right: 5px;
   }
 
   @media screen and (max-width: 768px) {
@@ -95,16 +101,8 @@ export const OptionLinkSmallerScreenText = styled.div`
   }
 `;
 
-export const OptionLinkSmallerScreenImage = styled(Link)`
-  display: none;
-
-  img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-  }
-
-  @media screen and (max-width: 768px) {
-    display: block;
-  }
+export const OptionLinkSmallerScreenImage = styled.img`
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
 `;
