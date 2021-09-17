@@ -1,3 +1,5 @@
+import { IClearReport } from '../report/report.types';
+
 export const CHECK_USER_SESSION = 'CHECK_USER_SESSION';
 
 export const SIGN_IN_START = 'SIGN_IN_START';
@@ -67,7 +69,11 @@ interface ISignOutFailure {
   type: typeof SIGN_OUT_FAILURE;
   payload: string;
 }
-export type SignOutDispatchType = ISignOutStart | ISignOutSuccess | ISignOutFailure;
+export type SignOutDispatchType =
+  | ISignOutStart
+  | ISignOutSuccess
+  | ISignOutFailure
+  | IClearReport;
 
 // User Action type
 export type UserActionType =

@@ -26,14 +26,15 @@ import {
   ISignInSuccess,
   ISignInFailure,
   SignUpDispatchType,
+  SIGN_UP_START,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE,
   SignOutDispatchType,
   SIGN_OUT_START,
   SIGN_OUT_SUCCESS,
   SIGN_OUT_FAILURE,
-  SIGN_UP_START,
-  SIGN_UP_FAILURE,
-  SIGN_UP_SUCCESS,
 } from './user.types';
+import { CLEAR_REPORT } from '../report/report.types';
 
 const getSnapshotFromUserAuth =
   (userAuth: User, additionalData?: any) =>
@@ -143,10 +144,23 @@ export const signOutAction = () => async (dispatch: Dispatch<SignOutDispatchType
     type: SIGN_OUT_START,
   });
 
+  if (!window.confirm('Logout Confirmation')) {
+    dispatch({
+      type: SIGN_OUT_FAILURE,
+      payload: '',
+    });
+    return;
+  }
+
   try {
     await signOut(auth);
+
     dispatch({
       type: SIGN_OUT_SUCCESS,
+    });
+
+    dispatch({
+      type: CLEAR_REPORT,
     });
   } catch (err: any) {
     dispatch({
