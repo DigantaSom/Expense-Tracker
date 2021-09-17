@@ -1,19 +1,35 @@
 import { FC } from 'react';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+
 import LandingImage from '../../img/landing-image.jpg';
+import getFirstName from '../../utils/getFirstName';
+
 import {
   LandingContainer,
   LandingImageContainer,
   LandingInfo,
+  LandingTitle,
   ButtonContainer,
 } from './landing.styles';
 
 const DefaultLanding: FC = () => {
+  const { currentUser } = useSelector((state: RootState) => state.user);
+
   return (
     <LandingContainer>
       <LandingImageContainer imageUrl={LandingImage}>
         <LandingInfo>
-          <ButtonContainer to='/create-report'>
+          {currentUser && (
+            <LandingTitle data-aos='zoom-in-up' data-aos-duration='500'>
+              Hi, {getFirstName(currentUser.displayName)}!
+            </LandingTitle>
+          )}
+          <ButtonContainer
+            to='/create-report'
+            data-aos='zoom-in-up'
+            data-aos-duration='800'>
             Create a new Expense Report
           </ButtonContainer>
         </LandingInfo>

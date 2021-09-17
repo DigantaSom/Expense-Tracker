@@ -43,7 +43,6 @@ const Header: FC = () => {
       <OptionLink to='/profile'>My Profile</OptionLink>
       <OptionLinkSmallerScreenImage to='/profile'>
         <img src={currentUser?.photoURL ? currentUser.photoURL : NoDp} alt='Profile' />
-        {/* <img src={NoDp} alt='Profile' /> */}
       </OptionLinkSmallerScreenImage>
 
       <OptionLink as='div' onClick={() => dispatch(signOutAction())}>

@@ -113,7 +113,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
   };
 
   return (
-    <ReportItemContainer>
+    <ReportItemContainer data-aos='zoom-in-up' data-aos-duration='600'>
       <colgroup>
         <Column1 span={1} />
         <Column2 span={1} />

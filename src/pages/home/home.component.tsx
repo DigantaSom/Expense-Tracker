@@ -1,5 +1,8 @@
 import { FC, useEffect } from 'react';
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 import { useDispatch } from 'react-redux';
 import { clearReport } from '../../redux/report/report.actions';
 
@@ -13,6 +16,10 @@ const Home: FC = () => {
   useEffect(() => {
     dispatch(clearReport());
   }, [dispatch]);
+
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   return (
     <HomeContainer>

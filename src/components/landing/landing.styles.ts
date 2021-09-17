@@ -32,6 +32,13 @@ export const LandingInfo = styled.div`
   }
 `;
 
+export const LandingTitle = styled.h2`
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-shadow: 2px 5px 8px rgba(0, 255, 0, 0.3);
+`;
+
 export const ButtonContainer = styled(Link)`
   background-color: ${Colors.primary};
   color: white;

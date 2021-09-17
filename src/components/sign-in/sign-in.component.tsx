@@ -30,7 +30,7 @@ const SignIn: FC = () => {
   };
 
   return (
-    <SignInContainer>
+    <SignInContainer data-aos='fade-up-right'>
       <Title>I already have an account</Title>
       <span>Sign in with your email and password</span>
 

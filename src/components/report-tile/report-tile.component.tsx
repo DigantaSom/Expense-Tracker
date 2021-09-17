@@ -23,7 +23,7 @@ const ReportTile: FC<ReportTileProps> = ({ year, month }) => {
   };
 
   return (
-    <TileContainer onClick={handleClickTile}>
+    <TileContainer onClick={handleClickTile} data-aos='flip-left' data-aos-duration='500'>
       <Icon>📁</Icon>
       <Info>
         {month}, {year}

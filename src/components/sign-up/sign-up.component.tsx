@@ -38,7 +38,7 @@ const SignIn: FC = () => {
   };
 
   return (
-    <SignUpContainer>
+    <SignUpContainer data-aos='fade-up-left'>
       <Title>I do not have an account</Title>
       <span>Sign up with your email and password</span>
 

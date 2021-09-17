@@ -51,7 +51,7 @@ const Profile2Page: FC = () => {
 
   return (
     <ProfileContainer>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} data-aos='zoom-out-up'>
         <FormInput
           type='number'
           min='1900'
@@ -69,7 +69,7 @@ const Profile2Page: FC = () => {
         </CustomButton>
       </Form>
 
-      <Title>{reportRefsTitle}</Title>
+      <Title data-aos='fade-up'>{reportRefsTitle}</Title>
 
       {reportLoading ? (
         <Spinner />
