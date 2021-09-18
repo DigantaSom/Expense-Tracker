@@ -5,6 +5,8 @@ import {
   SIGN_IN_START,
   SIGN_IN_SUCCESS,
   SIGN_IN_FAILURE,
+  SIGN_UP_START,
+  SIGN_UP_FAILURE,
   SIGN_OUT_START,
   SIGN_OUT_SUCCESS,
   SIGN_OUT_FAILURE,
@@ -32,7 +34,21 @@ const userReducer = (
       return {
         ...state,
         currentUser: null,
-        // loading: true,
+        loading: true,
+      };
+
+    // Sign Up (sign up success is not needed, after success it automatically triggers sign in)
+    case SIGN_UP_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SIGN_UP_FAILURE:
+      return {
+        ...state,
+        currentUser: null,
+        loading: false,
+        error: action.payload,
       };
 
     // Sign In

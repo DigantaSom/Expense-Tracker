@@ -79,4 +79,5 @@ export type SignOutDispatchType =
 export type UserActionType =
   | CheckUserSessionDispatchType
   | SignInDispatchType
+  | SignUpDispatchType
   | SignOutDispatchType;

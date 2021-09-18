@@ -70,6 +70,10 @@ export const checkUserSession =
     try {
       const userAuth = await getCurrentUser();
       if (!userAuth) {
+        dispatch({
+          type: SIGN_IN_FAILURE,
+          payload: 'No user',
+        });
         return;
       }
       dispatch(getSnapshotFromUserAuth(userAuth as User) as any);
