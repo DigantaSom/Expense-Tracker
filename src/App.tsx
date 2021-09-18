@@ -20,6 +20,7 @@ const CreateReportPage = lazy(
 );
 const ProfilePage = lazy(() => import('./pages/profile/profile.component'));
 const ReportPage = lazy(() => import('./pages/report-page/report-page.component'));
+const NotFoundPage = lazy(() => import('./pages/not-found/not-found.component'));
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -34,29 +35,34 @@ const App: FC = () => {
       <GlobalStyle />
       <Header />
       <Suspense fallback={<Spinner />}>
-        <Switch>
-          <ErrorBoundary>
+        <ErrorBoundary>
+          <Switch>
             <Route exact path='/' component={HomePage} />
             <Route
+              exact
               path='/sign-in'
               render={() => (currentUser ? <Redirect to='/' /> : <SignInAndSignUpPage />)}
             />
             <Route
+              exact
               path='/create-report'
               render={() =>
                 currentUser ? <CreateReportPage /> : <Redirect to='/sign-in' />
               }
             />
             <Route
+              exact
               path='/profile'
               render={() => (currentUser ? <ProfilePage /> : <Redirect to='/sign-in' />)}
             />
             <Route
+              exact
               path='/report'
               render={() => (currentUser ? <ReportPage /> : <Redirect to='/sign-in' />)}
             />
-          </ErrorBoundary>
-        </Switch>
+            <Route component={NotFoundPage} />
+          </Switch>
+        </ErrorBoundary>
       </Suspense>
     </Router>
   );

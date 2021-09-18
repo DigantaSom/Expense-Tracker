@@ -4,6 +4,8 @@ import {
   ErrorImageOverlay,
   ErrorImageContainer,
   ErrorImageText,
+  Subtitle,
+  HomeLink,
 } from './error-boundary.styles';
 
 interface ErrorBoundaryProps {}
@@ -32,6 +34,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryStates> {
         <ErrorImageOverlay>
           <ErrorImageContainer imageUrl='https://i.imgur.com/yW2W9SC.png' />
           <ErrorImageText>Sorry, this page is broken.</ErrorImageText>
+          <Subtitle>
+            Try going to <HomeLink href='/'>Home</HomeLink>
+          </Subtitle>
         </ErrorImageOverlay>
       );
     }
