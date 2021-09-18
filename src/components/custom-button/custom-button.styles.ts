@@ -49,7 +49,6 @@ export const Button = styled.button<CustomButtonProps>`
   width: auto;
   height: 50px;
   letter-spacing: 0.5px;
-  line-height: 50px;
   padding: 0 35px;
   border-radius: ${props => (props.rounded ? UI.default_borderRadius : 0)};
   font-family: 'Open Sans Condensed', sans-serif;
@@ -59,13 +58,13 @@ export const Button = styled.button<CustomButtonProps>`
   cursor: pointer;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   ${getButtonStyles}
 
   @media screen and (max-width: 400px) {
     min-width: 120px;
     height: 40px;
-    line-height: 40px;
     padding: 0 20px;
   }
 
