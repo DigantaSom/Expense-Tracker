@@ -70,6 +70,7 @@ export const Button = styled.button<CustomButtonProps>`
   }
 
   @media screen and (max-width: 315px) {
+    min-width: 100px;
     padding: 0 5px;
   }
 `;
