@@ -147,7 +147,7 @@ export const signOutAction = () => async (dispatch: Dispatch<SignOutDispatchType
   if (!window.confirm('Logout Confirmation')) {
     dispatch({
       type: SIGN_OUT_FAILURE,
-      payload: '',
+      payload: 'Sign-out denied.',
     });
     return;
   }

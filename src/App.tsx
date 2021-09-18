@@ -7,12 +7,11 @@ import { checkUserSession } from './redux/user/user.actions';
 
 import GlobalStyle from './global.styles';
 
-import PrivateRoute from './components/private-route/private-route.component';
 import Spinner from './components/spinner/spinner.component';
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
 import Header from './components/header/header.component';
 
-import HomePage from './pages/home/home.component';
+const HomePage = lazy(() => import('./pages/home/home.component'));
 const SignInAndSignUpPage = lazy(
   () => import('./pages/sign-in-and-sign-up/sign-in-and-sign-up.component'),
 );
@@ -38,25 +37,23 @@ const App: FC = () => {
         <Switch>
           <ErrorBoundary>
             <Route exact path='/' component={HomePage} />
-            <PrivateRoute
-              path='/create-report'
-              component={CreateReportPage}
-              isAuthenticated={!!currentUser}
-            />
-            <PrivateRoute
-              path='/profile'
-              component={ProfilePage}
-              isAuthenticated={!!currentUser}
-            />
-            <PrivateRoute
-              path='/report'
-              component={ReportPage}
-              isAuthenticated={!!currentUser}
-            />
             <Route
-              exact
               path='/sign-in'
               render={() => (currentUser ? <Redirect to='/' /> : <SignInAndSignUpPage />)}
+            />
+            <Route
+              path='/create-report'
+              render={() =>
+                currentUser ? <CreateReportPage /> : <Redirect to='/sign-in' />
+              }
+            />
+            <Route
+              path='/profile'
+              render={() => (currentUser ? <ProfilePage /> : <Redirect to='/sign-in' />)}
+            />
+            <Route
+              path='/report'
+              render={() => (currentUser ? <ReportPage /> : <Redirect to='/sign-in' />)}
             />
           </ErrorBoundary>
         </Switch>

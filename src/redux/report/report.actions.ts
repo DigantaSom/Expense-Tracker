@@ -416,6 +416,14 @@ export const deleteReportItem =
       },
     });
 
+    if (!window.confirm('Are you sure you want to delete this Report Item?')) {
+      dispatch({
+        type: DELETE_REPORT_ITEM_FAILURE,
+        payload: 'Deletion denied.',
+      });
+      return;
+    }
+
     const year = dayjs(date).format('YYYY');
     const month = dayjs(date).format('MMMM');
 

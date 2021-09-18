@@ -105,9 +105,6 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
   };
 
   const handleDeleteItem = () => {
-    if (!window.confirm('Are you sure you want to delete this Report Item?')) {
-      return;
-    }
     if (currentUser) {
       dispatch(deleteReportItem(reportItemId as string, date, currentUser));
     }
