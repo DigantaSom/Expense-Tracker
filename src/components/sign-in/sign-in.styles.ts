@@ -9,8 +9,8 @@ export const SignInContainer = styled.div`
     margin-bottom: 50px;
   }
 
-  @media screen and (max-width: 380px) {
-    width: 90vw;
+  @media screen and (max-width: 400px) {
+    width: 100%;
   }
 `;
 

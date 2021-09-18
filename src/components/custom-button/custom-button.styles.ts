@@ -62,8 +62,10 @@ export const Button = styled.button<CustomButtonProps>`
 
   ${getButtonStyles}
 
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 400px) {
     min-width: 120px;
+    height: 40px;
+    line-height: 40px;
     padding: 0 20px;
   }
 

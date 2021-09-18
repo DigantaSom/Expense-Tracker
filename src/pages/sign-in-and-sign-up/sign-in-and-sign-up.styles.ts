@@ -19,8 +19,11 @@ export const Container = styled.div`
     align-items: center;
   }
 
-  @media screen and (max-width: 440px) {
+  /* @media screen and (max-width: 440px) {
     width: 100vw;
     padding: 0 20px;
+  } */
+  @media screen and (max-width: 400px) {
+    width: 90vw;
   }
 `;

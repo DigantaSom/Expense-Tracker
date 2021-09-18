@@ -5,7 +5,8 @@ import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { signOutAction } from '../../redux/user/user.actions';
 
 import { FaPlus } from 'react-icons/fa';
-import { FiLogIn, FiLogOut } from 'react-icons/fi';
+import { FiLogOut } from 'react-icons/fi';
+import { HiOutlineLogin } from 'react-icons/hi';
 
 import NoDp from '../../img/no-dp.jpg';
 
@@ -28,7 +29,8 @@ const Header: FC = () => {
     <>
       <OptionLink to='/sign-in'>Sign In</OptionLink>
       <OptionLinkSmallerScreen to='/sign-in'>
-        <OptionLinkSmallerScreenText>Sign In</OptionLinkSmallerScreenText> <FiLogIn />
+        <OptionLinkSmallerScreenText>Sign In</OptionLinkSmallerScreenText>{' '}
+        <HiOutlineLogin />
       </OptionLinkSmallerScreen>
     </>
   );
