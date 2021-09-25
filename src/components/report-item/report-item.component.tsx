@@ -13,11 +13,14 @@ import {
   deleteReportItem,
 } from '../../redux/report/report.actions';
 
-import { ItemFieldType, ConfirmType } from '../../types';
+import { EditFormType, ItemFieldType, ConfirmType } from '../../types';
 import { IReportItem } from '../../redux/report/report.types';
+
+import getNumberWithCommas from '../../utils/getNumberWithCommas';
 
 import Spinner from '../spinner/spinner.component';
 import FormInput from '../form-input/form-input.component';
+import TextAreaInput from '../text-area-input/text-area-input.component';
 import EditConfirmButtons from '../edit-confirm-buttons/edit-confirm-buttons.component';
 
 import {
@@ -42,20 +45,23 @@ interface ReportItemProps {
 const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
   const { id: reportItemId, item, cost, recipient, medium, date } = reportItem;
 
+  const initialFormData: EditFormType = {
+    editedItem: item,
+    editedDescription: reportItem.description ? reportItem.description : '',
+    // typecasted 'editedCost' to float while dispatching, since html input always gives string
+    editedCost: cost.toString(),
+    editedRecipient: recipient,
+    editedMedium: medium,
+    editedDate: dayjs(date).format('YYYY-MM-DD'),
+  };
+
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const reportActionLoading = useSelector(selectReportActionLoading);
 
   const [editField, setEditField] = useState<ItemFieldType>('');
   const [isActionLoading, setIsActionLoading] = useState(false);
-  const [editedFormData, setEditedFormData] = useState({
-    editedItem: item,
-    editedDescription: reportItem.description ? reportItem.description : '',
-    editedCost: cost,
-    editedRecipient: recipient,
-    editedMedium: medium,
-    editedDate: dayjs(date).format('YYYY-MM-DD'),
-  });
+  const [editedFormData, setEditedFormData] = useState<EditFormType>(initialFormData);
   const [editedTime, setEditedTime] = useState(dayjs(date).format('hh:mm'));
 
   useEffect(() => {
@@ -75,7 +81,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
     editedDate,
   } = editedFormData;
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setEditedFormData({
       ...editedFormData,
       [e.target.name]: e.target.value,
@@ -83,11 +89,20 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
   };
 
   const handleConfirmEdit = (confirmType: ConfirmType) => {
+    if (confirmType === 'Cancelled') {
+      setEditedFormData({
+        ...editedFormData,
+        ...initialFormData,
+      });
+      setEditField('');
+      return;
+    }
+
     const reportItemToDispatch: IReportItem = {
       id: reportItemId,
       item: editedItem,
       description: editedDescription,
-      cost: editedCost,
+      cost: parseFloat(editedCost),
       recipient: editedRecipient,
       medium: editedMedium,
       date: new Date(`${editedDate}T${editedTime}`).toISOString(),
@@ -134,13 +149,9 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
           <ItemSubheading>Name</ItemSubheading>
           <td>
             {editField === 'Name' ? (
-              <FormInput
-                type='text'
-                name='editedItem'
-                value={editedItem}
-                handleChange={handleChange}
-                required
-              />
+              <TextAreaInput name='editedItem' handleChange={handleChange} required>
+                {editedItem}
+              </TextAreaInput>
             ) : (
               <ItemInfo>{item}</ItemInfo>
             )}
@@ -178,13 +189,12 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
             <ItemSubheading>Description</ItemSubheading>
             <td>
               {editField === 'Description' ? (
-                <FormInput
-                  type='text'
+                <TextAreaInput
                   name='editedDescription'
-                  value={editedDescription}
                   handleChange={handleChange}
-                  required // since, should not edit it empty
-                />
+                  required>
+                  {editedDescription}
+                </TextAreaInput>
               ) : (
                 <ItemInfo>{reportItem.description}</ItemInfo>
               )}
@@ -220,7 +230,7 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
                 required
               />
             ) : (
-              <ItemInfo>Rs. {cost}</ItemInfo>
+              <ItemInfo>Rs. {getNumberWithCommas(cost)}</ItemInfo>
             )}
           </td>
           <EditDeleteCell>
@@ -244,13 +254,9 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
           <ItemSubheading>Recipient</ItemSubheading>
           <td>
             {editField === 'Recipient' ? (
-              <FormInput
-                type='text'
-                name='editedRecipient'
-                value={editedRecipient}
-                handleChange={handleChange}
-                required
-              />
+              <TextAreaInput name='editedRecipient' handleChange={handleChange} required>
+                {editedRecipient}
+              </TextAreaInput>
             ) : (
               <ItemInfo>{recipient}</ItemInfo>
             )}
@@ -276,13 +282,9 @@ const ReportItem: FC<ReportItemProps> = ({ index, reportItem }) => {
           <ItemSubheading>Medium</ItemSubheading>
           <td>
             {editField === 'Medium' ? (
-              <FormInput
-                type='text'
-                name='editedMedium'
-                value={editedMedium}
-                handleChange={handleChange}
-                required
-              />
+              <TextAreaInput name='editedMedium' handleChange={handleChange} required>
+                {editedMedium}
+              </TextAreaInput>
             ) : (
               <ItemInfo>{medium}</ItemInfo>
             )}

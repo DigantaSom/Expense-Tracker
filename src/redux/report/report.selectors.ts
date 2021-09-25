@@ -21,3 +21,7 @@ export const selectReportError = createSelector(
   [selectReportState],
   report => report.error,
 );
+
+export const selectTotalReportCost = createSelector([selectReport], report =>
+  report.reduce((accumulatedCost, reportItem) => accumulatedCost + reportItem.cost, 0),
+);

@@ -33,6 +33,13 @@ export const ReportItemContainer = styled.table`
   }
   td {
     padding: 8px 16px;
+
+    @media screen and (max-width: 500px) {
+      padding: 5px;
+    }
+    @media screen and (max-width: 280px) {
+      padding: 2px;
+    }
   }
   tr:last-child td:first-child {
     border-bottom-left-radius: 10px;

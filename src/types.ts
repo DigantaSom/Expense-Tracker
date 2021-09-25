@@ -1,5 +1,23 @@
 export type RedirectToType = 'Same' | 'Home';
 
+export type ItemFieldType =
+  | 'Name'
+  | 'Description'
+  | 'Cost'
+  | 'Recipient'
+  | 'Medium'
+  | 'Date'
+  | '';
+
+export type EditFormType = {
+  editedItem: string;
+  editedDescription?: string;
+  editedCost: string;
+  editedRecipient: string;
+  editedMedium: string;
+  editedDate: string;
+};
+
 export type MonthType =
   | 'January'
   | 'February'
@@ -13,15 +31,6 @@ export type MonthType =
   | 'October'
   | 'November'
   | 'December'
-  | '';
-
-export type ItemFieldType =
-  | 'Name'
-  | 'Description'
-  | 'Cost'
-  | 'Recipient'
-  | 'Medium'
-  | 'Date'
   | '';
 
 export type ConfirmType = 'Confirmed' | 'Cancelled';

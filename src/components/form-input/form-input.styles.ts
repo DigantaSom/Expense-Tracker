@@ -11,7 +11,7 @@ interface LabelProps {
   box: boolean;
 }
 
-const [mainColor, subColor] = ['black', 'grey'];
+const [mainColor, subColor] = ['black', 'gray'];
 
 const inputStyles = css`
   border: none;
@@ -58,6 +58,10 @@ const getInputStyles = (props: InputProps): FlattenSimpleInterpolation => {
 export const InputGroup = styled.div`
   margin: 45px 0;
   position: relative;
+
+  @media screen and (max-width: 768px) {
+    margin: 20px 0;
+  }
 `;
 
 export const Label = styled.label<LabelProps>`
